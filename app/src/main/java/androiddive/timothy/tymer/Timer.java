@@ -1,8 +1,14 @@
 package androiddive.timothy.tymer;
 
 import android.app.Activity;
+import android.database.Cursor;
+import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,18 +22,21 @@ import android.widget.TextView;
 
 public class Timer extends Activity implements OnClickListener {
     private  TextView timerN,timerL;
+    private TextView soundText;
     private Button bStart,bStop,bRes;
     private CountDownTimer countDownTimer;
     private long totalTime;
     private int hours,mins,secs;
     private long resumeTime;
     private DBManager dbManager;
+    private Ringtone r;
+    String timer1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer_view);
-
+        soundText=(TextView)findViewById(R.id.sound_edittext);
         bStart = (Button)findViewById(R.id.buttonStartTimer);
         bStop = (Button)findViewById(R.id.buttonStopTimer);
         bRes = (Button)findViewById(R.id.buttonResumeTimer);
@@ -42,7 +51,7 @@ public class Timer extends Activity implements OnClickListener {
         String title = intent_i.getStringExtra("title");
         Log.i("title", "title" + title);
 
-        String timer1 = intent_i.getStringExtra("timer1");
+        timer1 = intent_i.getStringExtra("timer1");
         Log.i("len", "len" + timer1);
 
         timerN.setText(title);
@@ -95,12 +104,20 @@ public class Timer extends Activity implements OnClickListener {
                 bStart.setText("Start");
                 startTimer();}
         else if (v.getId() == R.id.buttonStopTimer){
+                if(r.isPlaying()){
+                    r.stop();
+                    bStop.setVisibility(View.GONE);
+                    bStart.setVisibility(View.VISIBLE);
+                    bRes.setVisibility(View.GONE);
+                    timerL.setText(timer1);
+                }else {
+                    countDownTimer.cancel();
+                    bStop.setVisibility(View.GONE);
+                    bStart.setText("Restart");
+                    bRes.setVisibility(View.VISIBLE);
+                    bStart.setVisibility(View.VISIBLE);
+                }
 
-                countDownTimer.cancel();
-                bStop.setVisibility(View.GONE);
-                bStart.setText("Restart");
-                bRes.setVisibility(View.VISIBLE);
-                bStart.setVisibility(View.VISIBLE);
         }
         else if (v.getId()==R.id.buttonResumeTimer){
                 bStop.setVisibility(View.VISIBLE);
@@ -109,7 +126,6 @@ public class Timer extends Activity implements OnClickListener {
                 bStart.setVisibility(View.GONE);
                 totalTime=resumeTime;
                 startTimer();
-
         }
     }
 
@@ -128,9 +144,16 @@ public class Timer extends Activity implements OnClickListener {
 
             @Override
             public void onFinish() {
-                bStop.setVisibility(View.GONE);
-                bStart.setVisibility(View.VISIBLE);
+                bStop.setVisibility(View.VISIBLE);
+                bStop.setText("Stop");
+                bStart.setVisibility(View.GONE);
                 bRes.setVisibility(View.GONE);
+                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+                r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                r.play();
+
+
+                timerL.setText("TIME");
 
             }
         }.start();

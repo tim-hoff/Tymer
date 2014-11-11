@@ -37,9 +37,9 @@ public class TymerActivity extends ActionBarActivity{
     private SimpleCursorAdapter adapter;
 
     final String[] from = new String[] { DatabaseHelper._ID,
-            DatabaseHelper.TYMER_NAME, DatabaseHelper.TYMER_LEN};
+            DatabaseHelper.TYMER_NAME, DatabaseHelper.TYMER_LEN, DatabaseHelper.TYMER_SOUND};
 
-    final int[] to = new int[] {R.id.id,R.id.name,R.id.len};
+    final int[] to = new int[] {R.id.id,R.id.name,R.id.len,R.id.sound};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +66,20 @@ public class TymerActivity extends ActionBarActivity{
                 TextView idTextView = (TextView) view.findViewById(R.id.id);
                 TextView titleTextView = (TextView) view.findViewById(R.id.name);
                 TextView descTextView = (TextView) view.findViewById(R.id.len);
+                TextView soundTextView = (TextView) view.findViewById(R.id.sound);
+
 
                 String id = idTextView.getText().toString();
                 String name = titleTextView.getText().toString();
                 String len = descTextView.getText().toString();
+                String sound = soundTextView.getText().toString();
 
                 Intent modify_intent = new Intent(getApplicationContext(), ModifyTymerActivity.class);
                 modify_intent.putExtra("name", name);
                 modify_intent.putExtra("len", len);
                 modify_intent.putExtra("id", id);
+                modify_intent.putExtra("sound",sound);
+
 
                 startActivity(modify_intent);
                 return true;
@@ -85,17 +90,19 @@ public class TymerActivity extends ActionBarActivity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
                 TextView titleTextView = (TextView) view.findViewById(R.id.name);
                 TextView descTextView = (TextView) view.findViewById(R.id.len);
+                TextView soundTextView = (TextView) view.findViewById(R.id.sound);
 
                 String title = titleTextView.getText().toString();
                 String timer1 = descTextView.getText().toString();
+                String sound1 = soundTextView.getText().toString();
 
                 Intent intent_t = new Intent(getApplicationContext(), Timer.class);
                 intent_t.putExtra("title", title);
                 intent_t.putExtra("timer1", timer1);
+                intent_t.putExtra("sound1", sound1);
 
                 Log.v("asdf", "Creating Timer");
                 startActivity(intent_t);
-
             }
         });
 
@@ -118,8 +125,4 @@ public class TymerActivity extends ActionBarActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
 }

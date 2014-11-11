@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="10dp"
+    tools:context=".AddTymerActivity">
 
     <EditText
         android:id="@+id/subject_edittext"
@@ -11,8 +13,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/enter_name"
-        >
-
+        android:layout_marginBottom="10dp">
         <requestFocus />
     </EditText>
 
@@ -25,7 +26,8 @@
         android:inputType="time"
         android:minLines="1"
         android:numeric="integer"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:layout_marginBottom="10dp">
     </EditText>
     <EditText
         android:id="@+id/sound_edittext"

@@ -9,13 +9,13 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DatabaseHelper extends SQLiteOpenHelper{
     // Table Name
-    public static final String TABLE_NAME = "TODOS";
+    public static final String TABLE_NAME = "TIMERS";
 
     // Table columns
     public static final String _ID = "_id";
     public static final String TYMER_NAME = "name";
-    public static final String TYMER_LEN = "lengthSeconds";
-//    public static final String TYMER_SOUND = "timerSound";
+    public static final String TYMER_LEN =  "lengthSeconds";
+    public static final String TYMER_SOUND ="timerSound";
 
 
     // Database Information
@@ -25,9 +25,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     static final int DB_VERSION = 1;
 
     // Creating table query
-    private static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" + _ID
-            + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TYMER_NAME + " TEXT);";
-//           + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TYMER_NAME + " TEXT, " + TYMER_LEN + " TEXT, "+TYMER_SOUND+" TEXT);";
+    private static final String CREATE_TABLE = "create table " +
+            TABLE_NAME  + "(" +
+            _ID         + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            TYMER_NAME  + " TEXT, "+
+            TYMER_LEN   + " TEXT, "+
+            TYMER_SOUND + " TEXT);";
+
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }

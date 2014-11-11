@@ -19,10 +19,9 @@ import android.widget.EditText;
  */
 public class AddTymerActivity extends Activity implements OnClickListener {
 
-    private Button addTymerBtn,setRingtone;
-    private EditText nameEditText;
-    private EditText lenEditText;
-    private String chosenRingtone;
+    private Button addTymerBtn,alarmBtn;
+    private EditText nameEditText,lenEditText,soundEditText;
+
 
     private DBManager dbManager;
 
@@ -37,59 +36,56 @@ public class AddTymerActivity extends Activity implements OnClickListener {
 
         nameEditText = (EditText) findViewById(R.id.subject_edittext);
         lenEditText = (EditText) findViewById(R.id.description_edittext);
+        soundEditText = (EditText) findViewById(R.id.sound_edittext);
 
         addTymerBtn = (Button) findViewById(R.id.add_record);
-        setRingtone = (Button) findViewById(R.id.btn_ring);
+        alarmBtn = (Button) findViewById(R.id.btn_ring);
 
         dbManager = new DBManager(this);
         dbManager.open();
         addTymerBtn.setOnClickListener(this);
-        setRingtone.setOnClickListener(this);
+        alarmBtn.setOnClickListener(this);
     }
 
 
 
     @Override
     public void onClick(View v) {
-//        if(v.getId()==R.id.btn_ring ){
-//            Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-//            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALL);
-//            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
-//            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
-//            this.startActivityForResult(intent, 5);
-//
-//
-//
-//        }
-         if (v.getId() == R.id.add_record) {
-            final String name = nameEditText.getText().toString();
-            final String desc = lenEditText.getText().toString();
-//            final String sound = chosenRingtone;
-            //sound and then insert
+        if(v.getId()==R.id.btn_ring) {
+            Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALL);
+            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
+            this.startActivityForResult(intent, 5);
+        }
+        else if(v.getId() == R.id.add_record) {
+            final String name  = nameEditText.getText().toString();
+            final String desc  = lenEditText.getText().toString();
+            final String sound = soundEditText.getText().toString();
 
-            dbManager.insert(name, desc);
-//            Log.i("snd", "sound value" + sound);
+            dbManager.insert(name, desc, sound);
+
 
             Intent main = new Intent(AddTymerActivity.this, TymerActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(main);
         }
     }
-//    @Override
-//    protected void onActivityResult(final int requestCode,final int resultCode, final Intent intent)
-//    {
-//        if (resultCode == Activity.RESULT_OK && requestCode == 5)
-//        {
-//            Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-//
-//            if (uri != null)
-//            {
-//                this.chosenRingtone = uri.toString();
-//            }
-//            else
-//            {
-//                this.chosenRingtone = null;
-//            }
-//        }
-//    }
+    @Override
+    protected void onActivityResult(final int requestCode,final int resultCode, final Intent intent)
+    {
+        if (resultCode == Activity.RESULT_OK && requestCode == 5)
+        {
+            Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+
+            if (uri != null)
+            {
+                soundEditText.setText(uri.toString());
+            }
+            else
+            {
+                soundEditText.setText(null);
+            }
+        }
+    }
 }

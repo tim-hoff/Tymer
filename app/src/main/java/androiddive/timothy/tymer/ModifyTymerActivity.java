@@ -14,9 +14,9 @@ import android.os.Bundle;
  * Created by Timothy on 11/10/2014.
  */
 public class ModifyTymerActivity extends Activity implements OnClickListener{
-    private EditText nameText,lenText;
-    private Button updateBtn, deleteBtn;
-//    private String chosenRingtone;
+    private EditText nameText,lenText,soundText;
+    private Button updateBtn, deleteBtn, alarmBtn;
+
 
 
     private long _id;
@@ -26,9 +26,7 @@ public class ModifyTymerActivity extends Activity implements OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setTitle("Modify Record");
-
+        setTitle("Edit Timer");
         setContentView(R.layout.activity_modify_record);
 
         dbManager = new DBManager(this);
@@ -36,43 +34,48 @@ public class ModifyTymerActivity extends Activity implements OnClickListener{
 
         nameText = (EditText) findViewById(R.id.subject_edittext);
         lenText = (EditText) findViewById(R.id.description_edittext);
-
+        soundText= (EditText)findViewById(R.id.sound_edittext);
         updateBtn = (Button) findViewById(R.id.btn_update);
         deleteBtn = (Button) findViewById(R.id.btn_delete);
-
+        alarmBtn = (Button) findViewById(R.id.btn_ring);
 
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
         String name = intent.getStringExtra("name");
         String len = intent.getStringExtra("len");
-//        String sound = intent.getStringExtra("sound");
+        String sound = intent.getStringExtra("sound");
 
         _id = Long.parseLong(id);
         nameText.setText(name);
         lenText.setText(len);
-//        chosenRingtone = sound;
+        soundText.setText(sound);
 
         updateBtn.setOnClickListener(this);
         deleteBtn.setOnClickListener(this);
-//        setRingtone.setOnClickListener(this);
+        alarmBtn.setOnClickListener(this);
+
     }
 
 
 
     @Override
     public void onClick(View v) {
-//            if(v.getId()==R.id.btn_ring ){
-//                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-//                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALL);
-//                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
-//                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
-//                this.startActivityForResult(intent, 5);
-//            }
-         if(v.getId()==R.id.btn_update ) {
+          if(v.getId()==R.id.btn_ring) {
+
+
+
+            Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALL);
+            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
+            this.startActivityForResult(intent, 5);
+
+          }
+         else if(v.getId()==R.id.btn_update ) {
                 String title = nameText.getText().toString();
                 String desc = lenText.getText().toString();
-//                String sound = chosenRingtone;
-                dbManager.update(_id, title, desc);
+                String sound = soundText.getText().toString();
+                dbManager.update(_id, title, desc, sound);
                 this.returnHome();
             }
         else if (v.getId()==R.id.btn_delete ) {
@@ -86,21 +89,21 @@ public class ModifyTymerActivity extends Activity implements OnClickListener{
                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(home_intent);
     }
-//    @Override
-//     protected void onActivityResult(final int requestCode,final int resultCode, final Intent intent)
-//    {
-//        if (resultCode == Activity.RESULT_OK && requestCode == 5)
-//        {
-//            Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-//
-//            if (uri != null)
-//            {
-//                this.chosenRingtone = uri.toString();
-//            }
-//            else
-//            {
-//                this.chosenRingtone = null;
-//            }
-//        }
-//    }
+    @Override
+     protected void onActivityResult(final int requestCode,final int resultCode, final Intent intent)
+    {
+        if (resultCode == Activity.RESULT_OK && requestCode == 5)
+        {
+            Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+
+            if (uri != null)
+            {
+                soundText.setText(uri.toString());
+            }
+            else
+            {
+                soundText.setText(null);
+            }
+        }
+    }
 }
