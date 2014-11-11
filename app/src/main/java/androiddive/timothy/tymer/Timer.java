@@ -2,6 +2,7 @@ package androiddive.timothy.tymer;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -10,7 +11,8 @@ import android.widget.TextView;
 
 
 public class Timer extends Activity {
-    private TextView timerN,timerL;
+    private  TextView timerN,timerL;
+
     private DBManager dbManager;
 
     @Override
@@ -19,13 +21,18 @@ public class Timer extends Activity {
         setContentView(R.layout.timer_view);
         dbManager = new DBManager(this);
         dbManager.open();
-
+        Log.i("asdf", "on create called ");
         timerN = (TextView) findViewById(R.id.timerName);
         timerL = (TextView) findViewById(R.id.timerLen);
 
         Intent intent_i = getIntent();
         String title = intent_i.getStringExtra("title");
+        Log.i("title", "title" + title);
+
         String timer1 = intent_i.getStringExtra("timer1");
+        Log.i("len", "len" + timer1);
+
+
 
         timerN.setText(title);
         timerL.setText(timer1);

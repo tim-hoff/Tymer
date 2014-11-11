@@ -91,7 +91,7 @@ public class TymerActivity extends ActionBarActivity{
                 intent_t.putExtra("timer1", timer1);
 
                 Log.v("asdf", "Creating Timer");
-
+                startActivity(intent_t);
                 setContentView(R.layout.timer_view);
 
 
