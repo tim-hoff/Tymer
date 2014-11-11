@@ -27,6 +27,13 @@
         android:numeric="integer"
         android:paddingBottom="10dp">
     </EditText>
+    <EditText
+        android:id="@+id/sound_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:minLines="1"
+        android:visibility="gone" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
