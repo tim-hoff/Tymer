@@ -24,12 +24,32 @@
         android:hint="@string/enter_len"
         android:inputType="time"
         android:minLines="1"
-        android:numeric="integer">
+        android:numeric="integer"
+        android:paddingBottom="10dp">
     </EditText>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
+        <Button
+            android:id="@+id/btn_ring"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_ring" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_add"
+            android:enabled="true" />
+    </LinearLayout>
     <Button
         android:id="@+id/add_record"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/add_record" />

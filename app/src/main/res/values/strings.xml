@@ -12,5 +12,8 @@
     <string name="btn_delete">Delete</string>
     <string name="add_record">Add Record</string>
     <string name="title_activity_timer">Timer</string>
+    <string name="btn_ring">Alarm Sound</string>
+    <string name="enter_rep">Repeat</string>
+    <string name="btn_add">+ Step</string>
 
 </resources>
