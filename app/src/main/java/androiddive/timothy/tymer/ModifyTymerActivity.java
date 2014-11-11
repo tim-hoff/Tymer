@@ -14,7 +14,8 @@ import android.os.Bundle;
  * Created by Timothy on 11/10/2014.
  */
 public class ModifyTymerActivity extends Activity implements OnClickListener{
-    private EditText nameText,lenText,soundText;
+    private EditText nameText,lenText,soundText,repText;
+    private EditText repT2,repT3,repT4,lenT2,lenT3,lenT4;
     private Button updateBtn, deleteBtn, alarmBtn;
 
 
@@ -34,6 +35,20 @@ public class ModifyTymerActivity extends Activity implements OnClickListener{
 
         nameText = (EditText) findViewById(R.id.subject_edittext);
         lenText = (EditText) findViewById(R.id.description_edittext);
+        repText= (EditText) findViewById(R.id.rep_edittext);
+
+        lenT2= (EditText) findViewById(R.id.editText8);
+        lenT3= (EditText) findViewById(R.id.editText11);
+        lenT4= (EditText) findViewById(R.id.editText9);
+
+        repT2= (EditText) findViewById(R.id.editText10);
+        repT3= (EditText) findViewById(R.id.editText13);
+        repT4= (EditText) findViewById(R.id.editText12);
+
+
+
+
+
         soundText= (EditText)findViewById(R.id.sound_edittext);
         updateBtn = (Button) findViewById(R.id.btn_update);
         deleteBtn = (Button) findViewById(R.id.btn_delete);
@@ -43,11 +58,27 @@ public class ModifyTymerActivity extends Activity implements OnClickListener{
         String id = intent.getStringExtra("id");
         String name = intent.getStringExtra("name");
         String len = intent.getStringExtra("len");
+        String rep = intent.getStringExtra("rep");
+        String len2 = intent.getStringExtra("len2");
+        String rep2 = intent.getStringExtra("rep2");
+        String len3 = intent.getStringExtra("len3");
+        String rep3 = intent.getStringExtra("rep3");
+        String len4 = intent.getStringExtra("len4");
+        String rep4 = intent.getStringExtra("rep4");
         String sound = intent.getStringExtra("sound");
+
 
         _id = Long.parseLong(id);
         nameText.setText(name);
         lenText.setText(len);
+
+        repText.setText(rep);
+        lenT2.setText(len2);
+        repT2.setText(rep2);
+        lenT3.setText(len3);
+        repT3.setText(rep3);
+        lenT4.setText(len4);
+        repT4.setText(rep4);
         soundText.setText(sound);
 
         updateBtn.setOnClickListener(this);
@@ -61,9 +92,6 @@ public class ModifyTymerActivity extends Activity implements OnClickListener{
     @Override
     public void onClick(View v) {
           if(v.getId()==R.id.btn_ring) {
-
-
-
             Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
             intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALL);
             intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
@@ -75,7 +103,17 @@ public class ModifyTymerActivity extends Activity implements OnClickListener{
                 String title = nameText.getText().toString();
                 String desc = lenText.getText().toString();
                 String sound = soundText.getText().toString();
-                dbManager.update(_id, title, desc, sound);
+                String rep = repText.getText().toString();
+                String len2 = lenT2.getText().toString();
+                String rep2 = repT2.getText().toString();
+                String len3 = lenT3.getText().toString();
+                String rep3 = repT3.getText().toString();
+                String len4 = lenT4.getText().toString();
+                String rep4 = repT4.getText().toString();
+
+
+
+                dbManager.update(_id, title, desc, rep, len2,rep2,len3,rep3,len4,rep4,sound);
                 this.returnHome();
             }
         else if (v.getId()==R.id.btn_delete ) {

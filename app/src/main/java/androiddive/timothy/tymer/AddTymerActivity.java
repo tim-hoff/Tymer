@@ -20,7 +20,8 @@ import android.widget.EditText;
 public class AddTymerActivity extends Activity implements OnClickListener {
 
     private Button addTymerBtn,alarmBtn;
-    private EditText nameEditText,lenEditText,soundEditText;
+    private EditText nameEditText,lenEditText,soundEditText,repText;
+    private EditText repT2,repT3,repT4,lenT2,lenT3,lenT4;
 
 
     private DBManager dbManager;
@@ -37,6 +38,15 @@ public class AddTymerActivity extends Activity implements OnClickListener {
         nameEditText = (EditText) findViewById(R.id.subject_edittext);
         lenEditText = (EditText) findViewById(R.id.description_edittext);
         soundEditText = (EditText) findViewById(R.id.sound_edittext);
+        repText= (EditText) findViewById(R.id.editText);
+        lenT2= (EditText) findViewById(R.id.editText2);
+        lenT3= (EditText) findViewById(R.id.editText4);
+        lenT4= (EditText) findViewById(R.id.editText6);
+
+        repT2= (EditText) findViewById(R.id.editText3);
+        repT3= (EditText) findViewById(R.id.editText5);
+        repT4= (EditText) findViewById(R.id.editText7);
+
 
         addTymerBtn = (Button) findViewById(R.id.add_record);
         alarmBtn = (Button) findViewById(R.id.btn_ring);
@@ -62,8 +72,19 @@ public class AddTymerActivity extends Activity implements OnClickListener {
             final String name  = nameEditText.getText().toString();
             final String desc  = lenEditText.getText().toString();
             final String sound = soundEditText.getText().toString();
+            final String rep = repText.getText().toString();
+            final String len2 = lenT2.getText().toString();
+            final String rep2 = repT2.getText().toString();
+            final String len3 = lenT3.getText().toString();
+            final String rep3 = repT3.getText().toString();
+            final String len4 = lenT4.getText().toString();
+            final String rep4 = repT4.getText().toString();
 
-            dbManager.insert(name, desc, sound);
+
+
+
+
+            dbManager.insert(name, desc, rep, len2,rep2,len3,rep3,len4,rep4,sound);
 
 
             Intent main = new Intent(AddTymerActivity.this, TymerActivity.class)

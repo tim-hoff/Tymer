@@ -36,10 +36,13 @@ public class TymerActivity extends ActionBarActivity{
 
     private SimpleCursorAdapter adapter;
 
-    final String[] from = new String[] { DatabaseHelper._ID,
-            DatabaseHelper.TYMER_NAME, DatabaseHelper.TYMER_LEN, DatabaseHelper.TYMER_SOUND};
+    final String[] from = new String[] { DatabaseHelper._ID, DatabaseHelper.TYMER_NAME,
+            DatabaseHelper.TYMER_LEN,DatabaseHelper.TYMER_REP, DatabaseHelper.TYMER_LEN2,
+            DatabaseHelper.TYMER_REP2,DatabaseHelper.TYMER_LEN3,DatabaseHelper.TYMER_REP3,
+            DatabaseHelper.TYMER_LEN4,DatabaseHelper.TYMER_REP4,DatabaseHelper.TYMER_SOUND};
 
-    final int[] to = new int[] {R.id.id,R.id.name,R.id.len,R.id.sound};
+    final int[] to = new int[] {R.id.id,R.id.name,R.id.len,R.id.rep,R.id.len2,R.id.rep2,
+            R.id.len3,R.id.rep3,R.id.len4,R.id.rep4,R.id.sound};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,17 +69,40 @@ public class TymerActivity extends ActionBarActivity{
                 TextView idTextView = (TextView) view.findViewById(R.id.id);
                 TextView titleTextView = (TextView) view.findViewById(R.id.name);
                 TextView descTextView = (TextView) view.findViewById(R.id.len);
+                TextView r1 = (TextView) view.findViewById(R.id.rep);
+                TextView l2 = (TextView) view.findViewById(R.id.len2);
+                TextView r2 = (TextView) view.findViewById(R.id.rep2);
+                TextView l3 = (TextView) view.findViewById(R.id.len3);
+                TextView r3 = (TextView) view.findViewById(R.id.rep3);
+                TextView l4 = (TextView) view.findViewById(R.id.len4);
+                TextView r4 = (TextView) view.findViewById(R.id.rep4);
+
                 TextView soundTextView = (TextView) view.findViewById(R.id.sound);
+
 
 
                 String id = idTextView.getText().toString();
                 String name = titleTextView.getText().toString();
                 String len = descTextView.getText().toString();
+                String re1=r1.getText().toString();
+                String re2=r2.getText().toString();
+                String re3=r3.getText().toString();
+                String re4=r4.getText().toString();
+                String le2=l2.getText().toString();
+                String le3=l3.getText().toString();
+                String le4=l4.getText().toString();
                 String sound = soundTextView.getText().toString();
 
                 Intent modify_intent = new Intent(getApplicationContext(), ModifyTymerActivity.class);
                 modify_intent.putExtra("name", name);
                 modify_intent.putExtra("len", len);
+                modify_intent.putExtra("re1", re1);
+                modify_intent.putExtra("re2", re2);
+                modify_intent.putExtra("re3", re3);
+                modify_intent.putExtra("re4", re4);
+                modify_intent.putExtra("le2", le2);
+                modify_intent.putExtra("le3", le3);
+                modify_intent.putExtra("le4", le4);
                 modify_intent.putExtra("id", id);
                 modify_intent.putExtra("sound",sound);
 
@@ -91,6 +117,7 @@ public class TymerActivity extends ActionBarActivity{
                 TextView titleTextView = (TextView) view.findViewById(R.id.name);
                 TextView descTextView = (TextView) view.findViewById(R.id.len);
                 TextView soundTextView = (TextView) view.findViewById(R.id.sound);
+
 
                 String title = titleTextView.getText().toString();
                 String timer1 = descTextView.getText().toString();

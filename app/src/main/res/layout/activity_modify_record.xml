@@ -21,6 +21,14 @@
         android:paddingBottom="10dp">
 
         <EditText
+            android:id="@+id/sound_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:minLines="1"
+            android:visibility="gone" />
+
+        <EditText
             android:id="@+id/description_edittext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,15 +40,7 @@
         </EditText>
 
         <EditText
-            android:id="@+id/sound_edittext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:minLines="1"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/editText"
+            android:id="@+id/rep_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -54,22 +54,106 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:id="@+id/h2">
+
+        <EditText
+            android:id="@+id/editText8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/enter_len"
+            android:inputType="time"
+            android:minLines="1"
+            android:numeric="integer" />
+
+        <EditText
+            android:id="@+id/editText10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/enter_rep"
+            android:inputType="time"
+            android:minLines="1"
+            android:numeric="integer" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:id="@+id/h3">
+
+        <EditText
+            android:id="@+id/editText11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/enter_len"
+            android:inputType="time"
+            android:minLines="1"
+            android:numeric="integer" />
+
+        <EditText
+            android:id="@+id/editText13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/enter_rep"
+            android:inputType="time"
+            android:minLines="1"
+            android:numeric="integer" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:id="@+id/h4">
+
+        <EditText
+            android:id="@+id/editText9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/enter_len"
+            android:inputType="time"
+            android:minLines="1"
+            android:numeric="integer" />
+
+        <EditText
+            android:id="@+id/editText12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/enter_rep"
+            android:inputType="time"
+            android:minLines="1"
+            android:numeric="integer" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/btn_ring"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.41"
+            android:layout_weight="0.06"
             android:text="@string/btn_ring" />
 
         <Button
             android:id="@+id/button"
-            android:layout_width="wrap_content"
+            android:layout_width="56dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.70"
             android:text="@string/btn_add"
-            android:enabled="true" />
+            android:enabled="true"
+            android:layout_weight="0.21" />
     </LinearLayout>
 
     <LinearLayout
