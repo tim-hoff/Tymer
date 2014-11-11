@@ -83,11 +83,15 @@ public class TymerActivity extends ActionBarActivity{
                 TextView titleTextView = (TextView) view.findViewById(R.id.name);
                 TextView descTextView = (TextView) view.findViewById(R.id.len);
 
+                String title = titleTextView.getText().toString();
+                String timer1 = descTextView.getText().toString();
 
-                String name = titleTextView.getText().toString();
-                String len = descTextView.getText().toString();
+                Intent intent_t = new Intent(getApplicationContext(), Timer.class);
+                intent_t.putExtra("title", title);
+                intent_t.putExtra("timer1", timer1);
+
                 Log.v("asdf", "Creating Timer");
-                Timer Timer = new Timer(name,len);
+
                 setContentView(R.layout.timer_view);
 
 

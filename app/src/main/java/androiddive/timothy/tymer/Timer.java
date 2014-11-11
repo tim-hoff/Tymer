@@ -1,55 +1,56 @@
 package androiddive.timothy.tymer;
 
-import android.os.Bundle;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
+import android.content.Intent;
+import android.widget.TextView;
 
-/**
- * Created by Timothy on 11/10/2014.
- */
-public class Timer extends Activity{
-    private String title;
-    private String timer1;
+
+public class Timer extends Activity {
+    private TextView timerN,timerL;
+    private DBManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer_view);
+        dbManager = new DBManager(this);
+        dbManager.open();
 
+        timerN = (TextView) findViewById(R.id.timerName);
+        timerL = (TextView) findViewById(R.id.timerLen);
 
+        Intent intent_i = getIntent();
+        String title = intent_i.getStringExtra("title");
+        String timer1 = intent_i.getStringExtra("timer1");
 
+        timerN.setText(title);
+        timerL.setText(timer1);
     }
 
 
-
-    public Timer(String title, String timer1)
-    {
-        this.title = title;
-        this.timer1 = timer1;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
 
-    public void start()
-    {
-//        start the timer
-    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-    public void idle()
-    {
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
 
-    }
-
-    public void reset()
-    {
-
+        return super.onOptionsItemSelected(item);
     }
 }
