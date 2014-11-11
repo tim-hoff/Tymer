@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/enter_name" >
+        android:hint="@string/enter_name"
+        >
 
         <requestFocus />
     </EditText>
@@ -21,8 +22,9 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/enter_len"
-        android:inputType="textMultiLine"
-        android:maxLines="1" >
+        android:inputType="time"
+        android:minLines="1"
+        android:numeric="integer">
     </EditText>
 
     <Button
