@@ -3,11 +3,13 @@ package androiddive.timothy.tymer;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.concurrent.CountDownLatch;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
@@ -30,6 +32,7 @@ import android.widget.TextView;
 public class TymerActivity extends ActionBarActivity{
     private DBManager dbManager;
     private ListView listView;
+
 
     private SimpleCursorAdapter adapter;
 
@@ -92,10 +95,6 @@ public class TymerActivity extends ActionBarActivity{
 
                 Log.v("asdf", "Creating Timer");
                 startActivity(intent_t);
-                setContentView(R.layout.timer_view);
-
-
-
 
             }
         });
@@ -119,6 +118,7 @@ public class TymerActivity extends ActionBarActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 
 

@@ -2,23 +2,36 @@ package androiddive.timothy.tymer;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.widget.TextView;
 
 
-public class Timer extends Activity {
+public class Timer extends Activity implements OnClickListener {
     private  TextView timerN,timerL;
-
+    private Button bStart,bStop,bRes;
+    private CountDownTimer countDownTimer;
+    private long totalTime;
+    private int hours,mins,secs;
+    private long resumeTime;
     private DBManager dbManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer_view);
+
+        bStart = (Button)findViewById(R.id.buttonStartTimer);
+        bStop = (Button)findViewById(R.id.buttonStopTimer);
+        bRes = (Button)findViewById(R.id.buttonResumeTimer);
+
         dbManager = new DBManager(this);
         dbManager.open();
         Log.i("asdf", "on create called ");
@@ -32,10 +45,22 @@ public class Timer extends Activity {
         String timer1 = intent_i.getStringExtra("timer1");
         Log.i("len", "len" + timer1);
 
-
-
         timerN.setText(title);
         timerL.setText(timer1);
+        String inputTime = timer1;
+        try{
+            String[] split = inputTime.split(":");
+            hours = Integer.valueOf(split[0]);
+            mins = Integer.valueOf(split[1]);
+            secs = Integer.valueOf(split[2]);
+            totalTime=(hours*3600+mins*60+secs)*1000;
+            } catch (NumberFormatException nfe){
+            Log.e("inputTime", "could not parse: " + inputTime);
+        }
+
+        bStart.setOnClickListener(this);
+        bStop.setOnClickListener(this);
+        bRes.setOnClickListener(this);
     }
 
 
@@ -60,4 +85,55 @@ public class Timer extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.buttonStartTimer){
+                bStop.setVisibility(View.VISIBLE);
+                bRes.setVisibility(View.GONE);
+                bStart.setVisibility(View.GONE);
+                bStart.setText("Start");
+                startTimer();}
+        else if (v.getId() == R.id.buttonStopTimer){
+
+                countDownTimer.cancel();
+                bStop.setVisibility(View.GONE);
+                bStart.setText("Restart");
+                bRes.setVisibility(View.VISIBLE);
+                bStart.setVisibility(View.VISIBLE);
+        }
+        else if (v.getId()==R.id.buttonResumeTimer){
+                bStop.setVisibility(View.VISIBLE);
+                bRes.setVisibility(View.GONE);
+                bStart.setText("Start");
+                bStart.setVisibility(View.GONE);
+                totalTime=resumeTime;
+                startTimer();
+
+        }
+    }
+
+    public void startTimer(){
+        countDownTimer=new CountDownTimer(totalTime,500)
+        {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long sec = millisUntilFinished/1000;
+                timerL.setText((String.format("%02d",sec/3600))+":"+
+                               (String.format("%02d",(sec/60)%60))+":"+
+                               (String.format("%02d",sec%60)));
+                resumeTime=millisUntilFinished;
+            }
+
+            @Override
+            public void onFinish() {
+                bStop.setVisibility(View.GONE);
+                bStart.setVisibility(View.VISIBLE);
+                bRes.setVisibility(View.GONE);
+
+            }
+        }.start();
+    }
+
 }
