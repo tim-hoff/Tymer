@@ -21,50 +21,55 @@ import android.widget.TextView;
 
 
 public class Timer extends Activity implements View.OnClickListener {
-    private TextView timerN,timerL,timerM,inC,snC;
-    private Button bStart,bStop,bPause,bRes;
+    private TextView timerName,timerLen,timerMs,intvCheck,soundCheck;
+    private Button buttonStartTimer,buttonPauseTimer,buttonResumeTimer,buttonStopTimer;
+
     private CountDownTimer countDownTimer;
-    private long totalTime,resumeTime;
-    private int hours,mins,secs,ms;
-    private DBManager dbManager;
-    private long startTime;
-    private Ringtone r;
+    private int hours,mins,secs;
+    private long totalTime,startTime, resumeTime;
     private String sound;
 
+    private DBManager dbManager;
+    private Ringtone r;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer_view);
-        timerN = (TextView) findViewById(R.id.timerName);
-        timerL = (TextView) findViewById(R.id.timerLen);
-        timerM= (TextView)findViewById(R.id.timerMs);
-        inC= (TextView)findViewById(R.id.intvCheck);
-        snC=(TextView)findViewById(R.id.soundCheck);
+        timerName = (TextView) findViewById(R.id.timerName);
+        timerLen = (TextView) findViewById(R.id.timerLen);
+        timerMs= (TextView)findViewById(R.id.timerMs);
+        intvCheck= (TextView)findViewById(R.id.intvCheck);
+        soundCheck=(TextView)findViewById(R.id.soundCheck);
 
-        bStart = (Button)findViewById(R.id.buttonStartTimer);
-        bPause = (Button)findViewById(R.id.buttonPauseTimer);
-        bRes = (Button)findViewById(R.id.buttonResumeTimer);
-        bStop= (Button) findViewById(R.id.buttonStopTimer);
+        buttonStartTimer = (Button)findViewById(R.id.buttonStartTimer);
+        buttonPauseTimer = (Button)findViewById(R.id.buttonPauseTimer);
+        buttonResumeTimer = (Button)findViewById(R.id.buttonResumeTimer);
+        buttonStopTimer = (Button)findViewById(R.id.buttonStopTimer);
 
         dbManager = new DBManager(this);
         dbManager.open();
 
         Intent intent_i = getIntent();
-        String title = intent_i.getStringExtra("title");
-        String timer1 = intent_i.getStringExtra("timer1");
-        String reps=intent_i.getStringExtra("reps");
+        String id = intent_i.getStringExtra("id");
+        String name = intent_i.getStringExtra("name");
+        String len1 = intent_i.getStringExtra("len1");
+        String rep1=intent_i.getStringExtra("rep1");
+        String len2 = intent_i.getStringExtra("len2");
+        String rep2=intent_i.getStringExtra("rep2");
+        String len3 = intent_i.getStringExtra("len3");
+        String rep3=intent_i.getStringExtra("rep3");
         sound=intent_i.getStringExtra("sound");
 
 
         // Passing needed infromation to the timer.
-        timerN.setText(title);
-        timerL.setText(timer1);
-        inC.setText(reps);
-        snC.setText(sound);
+        timerName.setText(name);
+        timerLen.setText(len1);
+        intvCheck.setText(rep1);
+        soundCheck.setText(sound);
 
-        int NumRep = Integer.valueOf(reps);
-        String inputTime = timer1;
+        int NumRep = Integer.valueOf(rep1);
+        String inputTime = len1;
         try{
             String[] split = inputTime.split(":");
             hours = Integer.valueOf(split[0]);
@@ -76,10 +81,10 @@ public class Timer extends Activity implements View.OnClickListener {
         }
         startTime=totalTime;
 
-        bStart.setOnClickListener(this);
-        bPause.setOnClickListener(this);
-        bRes.setOnClickListener(this);
-        bStop.setOnClickListener(this);
+        buttonStartTimer.setOnClickListener(this);
+        buttonPauseTimer.setOnClickListener(this);
+        buttonResumeTimer.setOnClickListener(this);
+        buttonStopTimer.setOnClickListener(this);
     }
 
 
@@ -108,43 +113,43 @@ public class Timer extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.buttonStartTimer){
-            bPause.setVisibility(View.VISIBLE);
-            bRes.setVisibility(View.GONE);
-            bStart.setVisibility(View.GONE);
-            bStart.setText("Start");
+            buttonPauseTimer.setVisibility(View.VISIBLE);
+            buttonResumeTimer.setVisibility(View.GONE);
+            buttonStartTimer.setVisibility(View.GONE);
+            buttonStartTimer.setText("Start");
             totalTime=startTime;
             long s=totalTime/1000;
-            timerL.setText((String.format("%02d",s/3600))+":"+
+            timerLen.setText((String.format("%02d",s/3600))+":"+
                 (String.format("%02d",(s/60)%60))+":"+
                 (String.format("%02d",s%60)));
-            timerM.setText("00");
+            timerMs.setText("00");
             startTimer();
         }
         else if(v.getId() == R.id.buttonPauseTimer){
                 countDownTimer.cancel();
-                bPause.setVisibility(View.GONE);
-                bStart.setText("Restart");
-                bRes.setVisibility(View.VISIBLE);
-                bStart.setVisibility(View.VISIBLE);
+            buttonPauseTimer.setVisibility(View.GONE);
+            buttonStartTimer.setText("Restart");
+            buttonResumeTimer.setVisibility(View.VISIBLE);
+            buttonStartTimer.setVisibility(View.VISIBLE);
             }
         else if(v.getId()==R.id.buttonResumeTimer){
-            bPause.setVisibility(View.VISIBLE);
-            bRes.setVisibility(View.GONE);
-            bStart.setText("Start");
-            bStart.setVisibility(View.GONE);
+            buttonPauseTimer.setVisibility(View.VISIBLE);
+            buttonResumeTimer.setVisibility(View.GONE);
+            buttonStartTimer.setText("Start");
+            buttonStartTimer.setVisibility(View.GONE);
             totalTime=resumeTime;
             startTimer();
         }
         else if(v.getId()==R.id.buttonStopTimer){
-            bStop.setVisibility(View.GONE);
-             r.stop();
-            bStart.setVisibility(View.VISIBLE);
+            buttonStopTimer.setVisibility(View.GONE);
+            r.stop();
+            buttonStartTimer.setVisibility(View.VISIBLE);
             totalTime=startTime;
             long s=totalTime/1000;
-            timerL.setText((String.format("%02d",s/3600))+":"+
+            timerLen.setText((String.format("%02d",s/3600))+":"+
                     (String.format("%02d",(s/60)%60))+":"+
                     (String.format("%02d",s%60)));
-            timerM.setText("00");
+            timerMs.setText("00");
         }
     }
 
@@ -155,21 +160,22 @@ public class Timer extends Activity implements View.OnClickListener {
             @Override
             public void onTick(long millisUntilFinished) {
                 long sec = millisUntilFinished/1000;
-                timerL.setText((String.format("%02d",sec/3600))+":"+
+                timerLen.setText((String.format("%02d",sec/3600))+":"+
                                (String.format("%02d",(sec/60)%60))+":"+
                                (String.format("%02d",sec%60)));
-                timerM.setText(String.format("%02d",(millisUntilFinished/10)%100));
+                timerMs.setText(String.format("%02d",(millisUntilFinished/10)%100));
                 resumeTime=millisUntilFinished;
             }
 
             @Override
             public void onFinish() {
-                bStop.setVisibility(View.VISIBLE);
-                bStop.setText("Stop");
-                bPause.setVisibility(View.GONE);
-                bStart.setVisibility(View.GONE);
-                bRes.setVisibility(View.GONE);
-                timerL.setText("TIME");
+                buttonStopTimer.setVisibility(View.VISIBLE);
+                buttonStopTimer.setText("Stop");
+                buttonPauseTimer.setVisibility(View.GONE);
+                buttonStartTimer.setVisibility(View.GONE);
+                buttonResumeTimer.setVisibility(View.GONE);
+                timerLen.setText("TIME");
+                timerMs.setText("");
                 r = RingtoneManager.getRingtone(getApplicationContext(),Uri.parse(sound));
                 r.play();
             }

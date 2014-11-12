@@ -14,15 +14,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     // Table columns
     public static final String _ID = "_id";
     public static final String TYMER_NAME = "name";
-    public static final String TYMER_LEN =  "len";
-    public static final String TYMER_REP =  "rep";
-    public static final String TYMER_LEN2 =  "len2";
-    public static final String TYMER_REP2 =  "rep2";
-    public static final String TYMER_LEN3 =  "len3";
-    public static final String TYMER_REP3 =  "rep3";
-    public static final String TYMER_LEN4 =  "len4";
-    public static final String TYMER_REP4 =  "rep4";
-    public static final String TYMER_SOUND ="timerSound";
+    public static final String TYMER_LEN1 = "len1";
+    public static final String TYMER_REP1 = "rep1";
+    public static final String TYMER_LEN2 = "len2";
+    public static final String TYMER_REP2 = "rep2";
+    public static final String TYMER_LEN3 = "len3";
+    public static final String TYMER_REP3 = "rep3";
+    public static final String TYMER_SOUND ="sound";
 
 
     // Database Information
@@ -36,14 +34,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             TABLE_NAME  + "(" +
             _ID         + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             TYMER_NAME  + " TEXT, "+
-            TYMER_LEN   + " TEXT, "+
-            TYMER_REP   + " TEXT, "+
+            TYMER_LEN1  + " TEXT, "+
+            TYMER_REP1  + " TEXT, "+
             TYMER_LEN2  + " TEXT, "+
             TYMER_REP2  + " TEXT, "+
             TYMER_LEN3  + " TEXT, "+
             TYMER_REP3  + " TEXT, "+
-            TYMER_LEN4  + " TEXT, "+
-            TYMER_REP4  + " TEXT, "+
             TYMER_SOUND + " TEXT);";
 
     public DatabaseHelper(Context context) {
