@@ -26,14 +26,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/timerName"
+                android:id="@+id/tname"
                 android:text="Timer Name"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:id="@+id/centeredtimelayout">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -48,8 +49,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="00:00:00"
-                    android:id="@+id/timerLen"
-                    android:paddingBottom="0dp"
+                    android:id="@+id/ttotallen"
                     android:textSize="65dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true" />
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ms"
-                android:id="@+id/timerMs"
+                android:id="@+id/ttotalms"
                 android:textSize="25dp"
                 android:layout_toEndOf="@+id/linearLayout"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -72,53 +72,65 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="match_parent" android:layout_height="fill_parent"
+            android:layout_width="wrap_content" android:layout_height="fill_parent"
             tools:ignore="UselessParent"
             android:showDividers="none"
             android:gravity="top|center"
             android:paddingBottom="5dp"
-            android:paddingTop="5dp">
+            android:paddingTop="5dp"
+            android:id="@+id/buttonlayout"
+            android:orientation="horizontal">
 
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Pause"
                 android:id="@+id/buttonPauseTimer"
                 android:visibility="gone"
-                android:enabled="true"/>
+                android:enabled="true"
+                android:ems="10" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Stop"
                 android:id="@+id/buttonStopTimer"
                 android:visibility="gone"
-                android:enabled="true" />
+                android:enabled="true"
+                android:ems="5" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Start"
                 android:id="@+id/buttonStartTimer"
                 android:visibility="visible"
-                android:enabled="true" />
+                android:enabled="true"
+                android:ems="10" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Reset"
                 android:id="@+id/buttonResetTimer"
                 android:enabled="true"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:ems="5" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Resume"
                 android:id="@+id/buttonResumeTimer"
                 android:enabled="true"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:ems="5" />
 
 
         </LinearLayout>
@@ -127,24 +139,101 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="RepHere"
-            android:id="@+id/intvCheck"
-            android:padding="3dp" />
-
-        <TextView
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Sound String"
-            android:id="@+id/soundCheck"
-            android:padding="3dp" />
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Intervals"
+                    android:id="@+id/textView5"
+                    android:paddingBottom="5dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="00:00:00"
+                    android:id="@+id/tlen1"
+                    android:padding="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="00:00:00"
+                    android:id="@+id/tlen2"
+                    android:padding="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="00:00:00"
+                    android:id="@+id/tlen3"
+                    android:padding="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Iterations"
+                    android:id="@+id/textView6"
+                    android:paddingBottom="5dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="1/5"
+                    android:id="@+id/trep1"
+                    android:padding="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="1/5"
+                    android:id="@+id/trep2"
+                    android:padding="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="1/5"
+                    android:id="@+id/trep3"
+                    android:padding="5dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -11,7 +11,6 @@
         android:id="@+id/aname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:hint="@string/enter_name"
         android:layout_marginBottom="10dp">
         <requestFocus />
@@ -19,38 +18,41 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal">
 
         <EditText
             android:id="@+id/alen1"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:hint="@string/enter_len"
             android:inputType="time"
             android:minLines="1"
             android:numeric="integer"
-            android:paddingBottom="10dp"
             android:enabled="true"
-            android:ems="10">
+            android:editable="true"
+            >
         </EditText>
 
         <EditText
             android:id="@+id/arep1"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:ems="10"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:hint="@string/enter_rep"
             android:inputType="time"
             android:minLines="1"
             android:numeric="integer"
-            android:editable="true" />
+            android:editable="true"
+            android:enabled="true"/>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:id="@+id/h2"
@@ -58,33 +60,34 @@
 
         <EditText
             android:id="@+id/alen2"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:hint="@string/enter_len"
             android:inputType="time"
             android:minLines="1"
             android:numeric="integer"
-            android:paddingBottom="10dp"
             android:enabled="true"
-            android:ems="10"
+            android:editable="true"
             android:text="@string/hLen" />
 
         <EditText
             android:id="@+id/arep2"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:ems="10"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:hint="@string/enter_rep"
             android:inputType="time"
             android:minLines="1"
             android:numeric="integer"
             android:editable="true"
+            android:enabled="true"
             android:text="@string/hRep" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:visibility="gone"
@@ -92,27 +95,28 @@
 
         <EditText
             android:id="@+id/alen3"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:hint="@string/enter_len"
             android:inputType="time"
             android:minLines="1"
             android:numeric="integer"
-            android:paddingBottom="10dp"
             android:enabled="true"
-            android:ems="10"
+            android:editable="true"
             android:text="@string/hLen" />
 
         <EditText
             android:id="@+id/arep3"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:ems="10"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:hint="@string/enter_rep"
             android:inputType="time"
             android:minLines="1"
             android:numeric="integer"
             android:editable="true"
+            android:enabled="true"
             android:text="@string/hRep" />
     </LinearLayout>
 
@@ -120,7 +124,7 @@
         android:id="@+id/asound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:ems="7"
         android:minLines="1"
         android:visibility="gone" />
     <LinearLayout
@@ -133,7 +137,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/btn_ring" />
+            android:text="@string/btn_ring"
+            android:ems="7" />
 
         <Button
             android:id="@+id/btn_addrep"
@@ -141,13 +146,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btn_add"
-            android:enabled="true" />
+            android:enabled="true"
+            android:ems="7"
+            android:hapticFeedbackEnabled="true" />
     </LinearLayout>
     <Button
         android:id="@+id/btn_addtimer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/add_record" />
+        android:text="@string/add_record"
+        android:ems="14" />
 
 </LinearLayout>

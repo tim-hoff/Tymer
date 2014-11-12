@@ -47,7 +47,6 @@ public class ModifyTymerActivity extends Activity implements OnClickListener{
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
         String name = intent.getStringExtra("name");
-        String totallen = intent.getStringExtra("totallen");
         String len1 = intent.getStringExtra("len1");
         String rep1 = intent.getStringExtra("rep1");
         String len2 = intent.getStringExtra("len2");

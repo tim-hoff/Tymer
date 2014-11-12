@@ -2,6 +2,7 @@ package androiddive.timothy.tymer;
 
 import android.app.Activity;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -21,13 +22,15 @@ import android.widget.TextView;
 
 
 public class Timer extends Activity implements View.OnClickListener {
-    private TextView timerName,timerLen,timerMs,intvCheck,soundCheck;
+    private TextView tname,ttotallen,ttotalms;
+    private TextView trep1,tlen1,trep2,tlen2,trep3,tlen3;
     private Button buttonStartTimer,buttonStopTimer, buttonPauseTimer,buttonResetTimer,buttonResumeTimer;
 
     private CountDownTimer countDownTimer;
     private int hours,mins,secs;
     private long totalTime,startTime, resumeTime;
     private String sound;
+    Typeface bold,regular;
 
     private DBManager dbManager;
     private Ringtone r;
@@ -36,11 +39,19 @@ public class Timer extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer_view);
-        timerName = (TextView) findViewById(R.id.timerName);
-        timerLen = (TextView) findViewById(R.id.timerLen);
-        timerMs= (TextView)findViewById(R.id.timerMs);
-        intvCheck= (TextView)findViewById(R.id.intvCheck);
-        soundCheck=(TextView)findViewById(R.id.soundCheck);
+
+        dbManager = new DBManager(this);
+        dbManager.open();
+
+        tname = (TextView) findViewById(R.id.tname);
+        ttotallen = (TextView) findViewById(R.id.ttotallen);
+        ttotalms= (TextView)findViewById(R.id.ttotalms);
+        trep1 = (TextView)findViewById(R.id.trep1);
+        tlen1= (TextView)findViewById(R.id.tlen1);
+        trep2 = (TextView)findViewById(R.id.trep2);
+        tlen2= (TextView)findViewById(R.id.tlen2);
+        trep3 = (TextView)findViewById(R.id.trep3);
+        tlen3= (TextView)findViewById(R.id.tlen3);
 
         buttonStartTimer = (Button)findViewById(R.id.buttonStartTimer);
         buttonStopTimer = (Button)findViewById(R.id.buttonStopTimer);
@@ -48,8 +59,11 @@ public class Timer extends Activity implements View.OnClickListener {
         buttonResetTimer=(Button)findViewById(R.id.buttonResetTimer);
         buttonResumeTimer = (Button)findViewById(R.id.buttonResumeTimer);
 
-        dbManager = new DBManager(this);
-        dbManager.open();
+        bold=Typeface.createFromAsset(getAssets(),"fonts/Play-Bold.ttf");
+        regular=Typeface.createFromAsset(getAssets(),"fonts/Play-Regular.ttf");
+        ttotallen.setTypeface(regular);
+        ttotalms.setTypeface(regular);
+
 
         Intent intent_i = getIntent();
         String id = intent_i.getStringExtra("id");
@@ -65,10 +79,15 @@ public class Timer extends Activity implements View.OnClickListener {
 
 
         // Passing needed infromation to the timer.
-        timerName.setText(name);
-        timerLen.setText(len1);
-        intvCheck.setText(rep1);
-        soundCheck.setText(sound);
+        tname.setText(name);
+        ttotallen.setText(totallen);
+        tlen1.setText(len1);
+        trep1.setText(rep1);
+        tlen2.setText(len2);
+        trep2.setText(rep2);
+        tlen3.setText(len3);
+        trep3.setText(rep3);
+
 
         int NumRep = Integer.valueOf(rep1);
         String inputTime = len1;
@@ -88,8 +107,6 @@ public class Timer extends Activity implements View.OnClickListener {
         buttonPauseTimer.setOnClickListener(this);
         buttonResetTimer.setOnClickListener(this);
         buttonResumeTimer.setOnClickListener(this);
-
-
     }
 
 
@@ -124,10 +141,10 @@ public class Timer extends Activity implements View.OnClickListener {
             buttonStartTimer.setText("Start");
             totalTime=startTime;
             long s=totalTime/1000;
-            timerLen.setText((String.format("%02d",s/3600))+":"+
+            ttotallen.setText((String.format("%02d",s/3600))+":"+
                 (String.format("%02d",(s/60)%60))+":"+
                 (String.format("%02d",s%60)));
-            timerMs.setText("00");
+            ttotalms.setText("00");
             startTimer();
         }
         else if(v.getId() == R.id.buttonPauseTimer)
@@ -150,10 +167,10 @@ public class Timer extends Activity implements View.OnClickListener {
             buttonResetTimer.setVisibility(View.GONE);
             totalTime=startTime;
             long s=totalTime/1000;
-            timerLen.setText((String.format("%02d",s/3600))+":"+
+            ttotallen.setText((String.format("%02d",s/3600))+":"+
                     (String.format("%02d",(s/60)%60))+":"+
                     (String.format("%02d",s%60)));
-            timerMs.setText("00");
+            ttotalms.setText("00");
 
         }
         else if(v.getId()==R.id.buttonStopTimer){
@@ -162,10 +179,10 @@ public class Timer extends Activity implements View.OnClickListener {
             buttonStartTimer.setVisibility(View.VISIBLE);
             totalTime=startTime;
             long s=totalTime/1000;
-            timerLen.setText((String.format("%02d",s/3600))+":"+
+            ttotallen.setText((String.format("%02d",s/3600))+":"+
                     (String.format("%02d",(s/60)%60))+":"+
                     (String.format("%02d",s%60)));
-            timerMs.setText("00");
+            ttotalms.setText("00");
         }
     }
 
@@ -176,10 +193,10 @@ public class Timer extends Activity implements View.OnClickListener {
             @Override
             public void onTick(long millisUntilFinished) {
                 long sec = millisUntilFinished/1000;
-                timerLen.setText((String.format("%02d",sec/3600))+":"+
+                ttotallen.setText((String.format("%02d",sec/3600))+":"+
                                (String.format("%02d",(sec/60)%60))+":"+
                                (String.format("%02d",sec%60)));
-                timerMs.setText(String.format("%02d",(millisUntilFinished/10)%100));
+                ttotalms.setText(String.format("%02d",(millisUntilFinished/10)%100));
                 resumeTime=millisUntilFinished;
             }
 
@@ -190,8 +207,8 @@ public class Timer extends Activity implements View.OnClickListener {
                 buttonPauseTimer.setVisibility(View.GONE);
                 buttonStartTimer.setVisibility(View.GONE);
                 buttonResumeTimer.setVisibility(View.GONE);
-                timerLen.setText("TIME");
-                timerMs.setText("");
+                ttotallen.setText("TIME");
+                ttotalms.setText("");
                 r = RingtoneManager.getRingtone(getApplicationContext(),Uri.parse(sound));
                 r.play();
             }

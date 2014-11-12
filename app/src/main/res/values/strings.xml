@@ -6,14 +6,14 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_view_record">view_record</string>
-    <string name="enter_len">Timer Duration</string>
+    <string name="enter_len">Duration</string>
     <string name="enter_name">Timer Name</string>
     <string name="btn_update">Update</string>
     <string name="btn_delete">Delete</string>
     <string name="add_record">Add Timer</string>
     <string name="title_activity_timer">Timer</string>
     <string name="btn_ring">Alarm Sound</string>
-    <string name="enter_rep">Repeat</string>
+    <string name="enter_rep">Iterations</string>
     <string name="hLen">00:00:00</string>
     <string name="hRep">0</string>
     <string name="btn_add">+</string>

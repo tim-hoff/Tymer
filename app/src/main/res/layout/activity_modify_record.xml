@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="10dp"
+    tools:context=".ModifyTymerActivity">
 
     <EditText
         android:id="@+id/mname"
@@ -11,14 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:ems="10"
-        android:hint="@string/enter_name"
-         />
+        android:hint="@string/enter_name" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:gravity="center_horizontal">
 
         <EditText
             android:id="@+id/msound"
@@ -30,9 +32,9 @@
 
         <EditText
             android:id="@+id/mlen1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_weight="1"
             android:hint="@string/enter_len"
             android:inputType="time"
             android:minLines="1"
@@ -41,9 +43,9 @@
 
         <EditText
             android:id="@+id/mrep1"
-            android:layout_width="match_parent"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_weight="1"
             android:hint="@string/enter_rep"
             android:inputType="time"
             android:minLines="1"
@@ -56,13 +58,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
-        android:id="@+id/h2">
+        android:id="@+id/h2"
+        android:gravity="center_horizontal">
 
         <EditText
             android:id="@+id/mlen2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_weight="1"
             android:hint="@string/enter_len"
             android:inputType="time"
             android:minLines="1"
@@ -70,9 +73,9 @@
 
         <EditText
             android:id="@+id/mrep2"
-            android:layout_width="match_parent"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_weight="1"
             android:hint="@string/enter_rep"
             android:inputType="time"
             android:minLines="1"
@@ -84,13 +87,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
-        android:id="@+id/h3">
+        android:id="@+id/h3"
+        android:gravity="center_horizontal">
 
         <EditText
             android:id="@+id/mlen3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_weight="1"
             android:hint="@string/enter_len"
             android:inputType="time"
             android:minLines="1"
@@ -98,9 +102,9 @@
 
         <EditText
             android:id="@+id/mrep3"
-            android:layout_width="match_parent"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_weight="1"
             android:hint="@string/enter_rep"
             android:inputType="time"
             android:minLines="1"
@@ -110,13 +114,15 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
 
         <Button
             android:id="@+id/btn_msound"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_weight="0.06"
+            android:layout_weight="1"
+            android:ems="14"
             android:text="@string/btn_ring" />
 
     </LinearLayout>
@@ -125,22 +131,24 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
 
         <Button
             android:id="@+id/btn_update"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/btn_update" />
+            android:text="@string/btn_update"
+            android:ems="7" />
 
         <Button
             android:id="@+id/btn_delete"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/btn_delete" />
+            android:text="@string/btn_delete"
+            android:ems="7" />
     </LinearLayout>
 
 </LinearLayout>
