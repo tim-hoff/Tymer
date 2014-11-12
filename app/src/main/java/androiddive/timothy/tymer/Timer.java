@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 public class Timer extends Activity implements View.OnClickListener {
     private TextView timerName,timerLen,timerMs,intvCheck,soundCheck;
-    private Button buttonStartTimer,buttonPauseTimer,buttonResumeTimer,buttonStopTimer;
+    private Button buttonStartTimer,buttonStopTimer, buttonPauseTimer,buttonResetTimer,buttonResumeTimer;
 
     private CountDownTimer countDownTimer;
     private int hours,mins,secs;
@@ -43,9 +43,10 @@ public class Timer extends Activity implements View.OnClickListener {
         soundCheck=(TextView)findViewById(R.id.soundCheck);
 
         buttonStartTimer = (Button)findViewById(R.id.buttonStartTimer);
-        buttonPauseTimer = (Button)findViewById(R.id.buttonPauseTimer);
-        buttonResumeTimer = (Button)findViewById(R.id.buttonResumeTimer);
         buttonStopTimer = (Button)findViewById(R.id.buttonStopTimer);
+        buttonPauseTimer = (Button)findViewById(R.id.buttonPauseTimer);
+        buttonResetTimer=(Button)findViewById(R.id.buttonResetTimer);
+        buttonResumeTimer = (Button)findViewById(R.id.buttonResumeTimer);
 
         dbManager = new DBManager(this);
         dbManager.open();
@@ -53,6 +54,7 @@ public class Timer extends Activity implements View.OnClickListener {
         Intent intent_i = getIntent();
         String id = intent_i.getStringExtra("id");
         String name = intent_i.getStringExtra("name");
+        String totallen=intent_i.getStringExtra("totallen");
         String len1 = intent_i.getStringExtra("len1");
         String rep1=intent_i.getStringExtra("rep1");
         String len2 = intent_i.getStringExtra("len2");
@@ -82,9 +84,12 @@ public class Timer extends Activity implements View.OnClickListener {
         startTime=totalTime;
 
         buttonStartTimer.setOnClickListener(this);
-        buttonPauseTimer.setOnClickListener(this);
-        buttonResumeTimer.setOnClickListener(this);
         buttonStopTimer.setOnClickListener(this);
+        buttonPauseTimer.setOnClickListener(this);
+        buttonResetTimer.setOnClickListener(this);
+        buttonResumeTimer.setOnClickListener(this);
+
+
     }
 
 
@@ -113,9 +118,9 @@ public class Timer extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.buttonStartTimer){
-            buttonPauseTimer.setVisibility(View.VISIBLE);
-            buttonResumeTimer.setVisibility(View.GONE);
             buttonStartTimer.setVisibility(View.GONE);
+            buttonPauseTimer.setVisibility(View.VISIBLE);
+
             buttonStartTimer.setText("Start");
             totalTime=startTime;
             long s=totalTime/1000;
@@ -125,24 +130,35 @@ public class Timer extends Activity implements View.OnClickListener {
             timerMs.setText("00");
             startTimer();
         }
-        else if(v.getId() == R.id.buttonPauseTimer){
-                countDownTimer.cancel();
+        else if(v.getId() == R.id.buttonPauseTimer)
+        {
+            countDownTimer.cancel();
             buttonPauseTimer.setVisibility(View.GONE);
-            buttonStartTimer.setText("Restart");
             buttonResumeTimer.setVisibility(View.VISIBLE);
-            buttonStartTimer.setVisibility(View.VISIBLE);
+            buttonResetTimer.setVisibility(View.VISIBLE);
             }
         else if(v.getId()==R.id.buttonResumeTimer){
             buttonPauseTimer.setVisibility(View.VISIBLE);
+            buttonResetTimer.setVisibility(View.GONE);
             buttonResumeTimer.setVisibility(View.GONE);
-            buttonStartTimer.setText("Start");
-            buttonStartTimer.setVisibility(View.GONE);
             totalTime=resumeTime;
             startTimer();
         }
+        else if(v.getId()==R.id.buttonResetTimer){
+            buttonStartTimer.setVisibility(View.VISIBLE);
+            buttonResumeTimer.setVisibility(View.GONE);
+            buttonResetTimer.setVisibility(View.GONE);
+            totalTime=startTime;
+            long s=totalTime/1000;
+            timerLen.setText((String.format("%02d",s/3600))+":"+
+                    (String.format("%02d",(s/60)%60))+":"+
+                    (String.format("%02d",s%60)));
+            timerMs.setText("00");
+
+        }
         else if(v.getId()==R.id.buttonStopTimer){
-            buttonStopTimer.setVisibility(View.GONE);
             r.stop();
+            buttonStopTimer.setVisibility(View.GONE);
             buttonStartTimer.setVisibility(View.VISIBLE);
             totalTime=startTime;
             long s=totalTime/1000;

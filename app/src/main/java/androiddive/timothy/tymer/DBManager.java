@@ -30,10 +30,11 @@ public class DBManager {
         dbHelper.close();
     }
 
-    public void insert(String name, String len1,String rep1,String len2,String rep2,String len3,
+    public void insert(String name,String totallen, String len1,String rep1,String len2,String rep2,String len3,
                        String rep3,String sound) {
         ContentValues contentValue = new ContentValues();
         contentValue.put(DatabaseHelper.TYMER_NAME, name);
+        contentValue.put(DatabaseHelper.TOTAL_LEN, totallen);
         contentValue.put(DatabaseHelper.TYMER_LEN1, len1);
         contentValue.put(DatabaseHelper.TYMER_REP1, rep1);
         contentValue.put(DatabaseHelper.TYMER_LEN2, len2);
@@ -46,6 +47,7 @@ public class DBManager {
 
     public Cursor fetch() {
         String[] columns = new String[] {DatabaseHelper._ID, DatabaseHelper.TYMER_NAME,
+                DatabaseHelper.TOTAL_LEN,
                 DatabaseHelper.TYMER_LEN1,DatabaseHelper.TYMER_REP1, DatabaseHelper.TYMER_LEN2,
                 DatabaseHelper.TYMER_REP2,DatabaseHelper.TYMER_LEN3,DatabaseHelper.TYMER_REP3,
                 DatabaseHelper.TYMER_SOUND};
@@ -57,12 +59,13 @@ public class DBManager {
         return cursor;
     }
 
-    public int update(long _id, String name, String len,String rep,String len2,String rep2,String len3,
+    public int update(long _id, String name, String totallen,String len1,String rep1,String len2,String rep2,String len3,
                       String rep3,String sound){
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.TYMER_NAME, name);
-        contentValues.put(DatabaseHelper.TYMER_LEN1, len);
-        contentValues.put(DatabaseHelper.TYMER_REP1, rep);
+        contentValues.put(DatabaseHelper.TOTAL_LEN, totallen);
+        contentValues.put(DatabaseHelper.TYMER_LEN1, len1);
+        contentValues.put(DatabaseHelper.TYMER_REP1, rep1);
         contentValues.put(DatabaseHelper.TYMER_LEN2, len2);
         contentValues.put(DatabaseHelper.TYMER_REP2, rep2);
         contentValues.put(DatabaseHelper.TYMER_LEN3, len3);

@@ -26,12 +26,13 @@ public class TymerActivity extends ActionBarActivity{
     private SimpleCursorAdapter adapter;
 
     final String[] from = new String[] { DatabaseHelper._ID, DatabaseHelper.TYMER_NAME,
+            DatabaseHelper.TOTAL_LEN,
             DatabaseHelper.TYMER_LEN1,DatabaseHelper.TYMER_REP1, DatabaseHelper.TYMER_LEN2,
             DatabaseHelper.TYMER_REP2,DatabaseHelper.TYMER_LEN3,DatabaseHelper.TYMER_REP3,
             DatabaseHelper.TYMER_SOUND};
 
-    final int[] to = new int[] {R.id.id,R.id.name,R.id.len1,R.id.rep1,R.id.len2,R.id.rep2,
-            R.id.len3,R.id.rep3, R.id.sound};
+    final int[] to = new int[] {R.id.id,R.id.name,R.id.totallen,R.id.len1,
+            R.id.rep1,R.id.len2,R.id.rep2,R.id.len3,R.id.rep3, R.id.sound};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class TymerActivity extends ActionBarActivity{
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long viewId) {
                 TextView idv = (TextView) view.findViewById(R.id.id);
                 TextView namev = (TextView) view.findViewById(R.id.name);
+                TextView totallenv= (TextView) view.findViewById(R.id.totallen);
                 TextView len1v = (TextView) view.findViewById(R.id.len1);
                 TextView rep1v = (TextView) view.findViewById(R.id.rep1);
                 TextView len2v = (TextView) view.findViewById(R.id.len2);
@@ -65,8 +67,11 @@ public class TymerActivity extends ActionBarActivity{
                 TextView rep3v = (TextView) view.findViewById(R.id.rep3);
                 TextView soundv = (TextView) view.findViewById(R.id.sound);
 
+
+
                 String id = idv.getText().toString();
                 String name = namev.getText().toString();
+                String totallen = totallenv.getText().toString();
                 String len1 = len1v.getText().toString();
                 String rep1 = rep1v.getText().toString();
                 String len2 = len2v.getText().toString();
@@ -78,6 +83,7 @@ public class TymerActivity extends ActionBarActivity{
                 Intent modify_intent = new Intent(getApplicationContext(), ModifyTymerActivity.class);
                 modify_intent.putExtra("id", id);
                 modify_intent.putExtra("name", name);
+                modify_intent.putExtra("totallen",totallen);
                 modify_intent.putExtra("len1", len1);
                 modify_intent.putExtra("rep1", rep1);
                 modify_intent.putExtra("len2", len2);
@@ -93,6 +99,7 @@ public class TymerActivity extends ActionBarActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
                 TextView namev = (TextView) view.findViewById(R.id.name);
+                TextView totallenv = (TextView) view.findViewById(R.id.totallen);
                 TextView len1v = (TextView) view.findViewById(R.id.len1);
                 TextView rep1v = (TextView) view.findViewById(R.id.rep1);
                 TextView len2v = (TextView) view.findViewById(R.id.len2);
@@ -102,6 +109,7 @@ public class TymerActivity extends ActionBarActivity{
                 TextView soundv = (TextView) view.findViewById(R.id.sound);
 
                 String name = namev.getText().toString();
+                String totallen = totallenv.getText().toString();
                 String len1 = len1v.getText().toString();
                 String rep1 = rep1v.getText().toString();
                 String len2 = len2v.getText().toString();
@@ -112,6 +120,7 @@ public class TymerActivity extends ActionBarActivity{
 
                 Intent intent_t = new Intent(getApplicationContext(), Timer.class);
                 intent_t.putExtra("name", name);
+                intent_t.putExtra("totallen",totallen);
                 intent_t.putExtra("len1", len1);
                 intent_t.putExtra("rep1", rep1);
                 intent_t.putExtra("len2", len2);
@@ -119,6 +128,9 @@ public class TymerActivity extends ActionBarActivity{
                 intent_t.putExtra("len3", len3);
                 intent_t.putExtra("rep3", rep3);
                 intent_t.putExtra("sound", sound);
+
+
+
                 startActivity(intent_t);
             }
         });

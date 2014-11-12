@@ -14,6 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     // Table columns
     public static final String _ID = "_id";
     public static final String TYMER_NAME = "name";
+    public static final String TOTAL_LEN = "totallen";
     public static final String TYMER_LEN1 = "len1";
     public static final String TYMER_REP1 = "rep1";
     public static final String TYMER_LEN2 = "len2";
@@ -34,6 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             TABLE_NAME  + "(" +
             _ID         + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             TYMER_NAME  + " TEXT, "+
+            TOTAL_LEN   + " TEXT, "+
             TYMER_LEN1  + " TEXT, "+
             TYMER_REP1  + " TEXT, "+
             TYMER_LEN2  + " TEXT, "+

@@ -24,6 +24,7 @@ public class AddTymerActivity extends Activity implements OnClickListener {
     private EditText aname,alen1,arep1,alen2,arep2,alen3,arep3,asound;
     private Button btn_asound,btn_addrep,btn_addtimer;
     private LinearLayout he2,he3;
+    private String atotallen;
 
     private DBManager dbManager;
 
@@ -76,6 +77,8 @@ public class AddTymerActivity extends Activity implements OnClickListener {
         }
         else if(v.getId() == R.id.btn_addtimer) {
             final String name = aname.getText().toString();
+
+
             final String len1 = alen1.getText().toString();
             final String rep1 = arep1.getText().toString();
             final String len2 = alen2.getText().toString();
@@ -83,8 +86,36 @@ public class AddTymerActivity extends Activity implements OnClickListener {
             final String len3 = alen3.getText().toString();
             final String rep3 = arep3.getText().toString();
             final String sound = asound.getText().toString();
+            int hours=0,mins=0,secs=0;
+            int timeT;
 
-            dbManager.insert(name, len1, rep1, len2, rep2, len3, rep3, sound);
+            String[] split = len1.split(":");
+            String[] split2 = len2.split(":");
+            String[] split3 = len3.split(":");
+            hours = hours+Integer.valueOf(rep1)*Integer.valueOf(split[0])+
+                    Integer.valueOf(rep2)*Integer.valueOf(split2[0])+
+                    Integer.valueOf(rep3)*Integer.valueOf(split3[0]);
+
+            mins = mins+Integer.valueOf(rep1)*Integer.valueOf(split[1])+
+                    Integer.valueOf(rep2)*Integer.valueOf(split2[1])+
+                    Integer.valueOf(rep3)*Integer.valueOf(split3[1]);
+
+            secs = secs+Integer.valueOf(rep1)*Integer.valueOf(split[2])+
+                    Integer.valueOf(rep2)* Integer.valueOf(split2[2])+
+                    Integer.valueOf(rep3)*Integer.valueOf(split3[2]);
+
+
+            timeT=(hours*3600+mins*60+secs);
+
+
+            String totallen=((String.format("%02d",timeT/3600))+":"+(String.format("%02d",(timeT/60)%60))+":"+(String.format("%02d",timeT%60)));
+
+
+
+            dbManager.insert(name, totallen, len1, rep1, len2, rep2, len3, rep3, sound);
+
+
+
 
             Intent main = new Intent(AddTymerActivity.this, TymerActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
