@@ -20,9 +20,9 @@ import android.content.Intent;
 import android.widget.TextView;
 
 
-public class Timer extends Activity implements OnClickListener {
+public class Timer extends Activity implements View.OnClickListener {
     private  TextView timerN,timerL;
-    private TextView soundText;
+    private TextView soundText,intvz;
     private Button bStart,bStop,bRes;
     private CountDownTimer countDownTimer;
     private long totalTime;
@@ -37,10 +37,10 @@ public class Timer extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer_view);
         soundText=(TextView)findViewById(R.id.sound_edittext);
+        intvz = (TextView)findViewById(R.id.rep);
         bStart = (Button)findViewById(R.id.buttonStartTimer);
         bStop = (Button)findViewById(R.id.buttonStopTimer);
         bRes = (Button)findViewById(R.id.buttonResumeTimer);
-
         dbManager = new DBManager(this);
         dbManager.open();
         Log.i("asdf", "on create called ");
@@ -103,29 +103,22 @@ public class Timer extends Activity implements OnClickListener {
                 bStart.setVisibility(View.GONE);
                 bStart.setText("Start");
                 startTimer();}
-        else if (v.getId() == R.id.buttonStopTimer){
-                if(r.isPlaying()){
-                    r.stop();
-                    bStop.setVisibility(View.GONE);
-                    bStart.setVisibility(View.VISIBLE);
-                    bRes.setVisibility(View.GONE);
-                    timerL.setText(timer1);
-                }else {
-                    countDownTimer.cancel();
-                    bStop.setVisibility(View.GONE);
-                    bStart.setText("Restart");
-                    bRes.setVisibility(View.VISIBLE);
-                    bStart.setVisibility(View.VISIBLE);
-                }
+        else if(v.getId() == R.id.buttonStopTimer){
 
-        }
-        else if (v.getId()==R.id.buttonResumeTimer){
-                bStop.setVisibility(View.VISIBLE);
-                bRes.setVisibility(View.GONE);
-                bStart.setText("Start");
-                bStart.setVisibility(View.GONE);
-                totalTime=resumeTime;
-                startTimer();
+                countDownTimer.cancel();
+                bStop.setVisibility(View.GONE);
+                bStart.setText("Restart");
+                bRes.setVisibility(View.VISIBLE);
+                bStart.setVisibility(View.VISIBLE);
+            }
+
+        else if(v.getId()==R.id.buttonResumeTimer){
+            bStop.setVisibility(View.VISIBLE);
+            bRes.setVisibility(View.GONE);
+            bStart.setText("Start");
+            bStart.setVisibility(View.GONE);
+            totalTime=resumeTime;
+            startTimer();
         }
     }
 
