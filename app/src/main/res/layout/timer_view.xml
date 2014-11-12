@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    tools:context="androiddive.timothy.tymer.Timer">
+    android:layout_height="match_parent"
+    tools:context="androiddive.timothy.tymer.Timer"
+    android:padding="10dp">
 
     <LinearLayout
         tools:context="androiddive.timothy.tymer.Timer"
@@ -10,8 +10,10 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="fill_vertical|center_horizontal" >
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:baselineAligned="true"
+        android:background="@drawable/abc_menu_dropdown_panel_holo_light">
 
         <LinearLayout
             tools:ignore="UselessParent"
@@ -20,7 +22,7 @@
             android:showDividers="none"
             android:gravity="center"
             android:paddingTop="15dp"
-            android:paddingBottom="25dp">
+            android:paddingBottom="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -28,7 +30,9 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/tname"
                 android:text="Timer Name"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="24dp"
+                android:textAllCaps="false" />
         </LinearLayout>
 
         <RelativeLayout
@@ -90,7 +94,8 @@
                 android:id="@+id/buttonPauseTimer"
                 android:visibility="gone"
                 android:enabled="true"
-                android:ems="10" />
+                android:ems="10"
+                android:background="@drawable/abc_menu_dropdown_panel_holo_light" />
 
             <Button
                 android:layout_width="0dip"
@@ -100,7 +105,8 @@
                 android:id="@+id/buttonStopTimer"
                 android:visibility="gone"
                 android:enabled="true"
-                android:ems="5" />
+                android:ems="5"
+                android:background="@drawable/abc_menu_dropdown_panel_holo_light" />
 
             <Button
                 android:layout_width="0dip"
@@ -110,7 +116,8 @@
                 android:id="@+id/buttonStartTimer"
                 android:visibility="visible"
                 android:enabled="true"
-                android:ems="10" />
+                android:ems="10"
+                android:background="@drawable/abc_menu_dropdown_panel_holo_light" />
 
             <Button
                 android:layout_width="0dip"
@@ -120,7 +127,8 @@
                 android:id="@+id/buttonResetTimer"
                 android:enabled="true"
                 android:visibility="gone"
-                android:ems="5" />
+                android:ems="5"
+                android:background="@drawable/abc_menu_dropdown_panel_holo_light" />
 
             <Button
                 android:layout_width="0dip"
@@ -130,7 +138,8 @@
                 android:id="@+id/buttonResumeTimer"
                 android:enabled="true"
                 android:visibility="gone"
-                android:ems="5" />
+                android:ems="5"
+                android:background="@drawable/abc_menu_dropdown_panel_holo_light" />
 
 
         </LinearLayout>
@@ -139,99 +148,121 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical">
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dp">
+            android:paddingBottom="5dp">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center"
-                android:padding="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Intervals"
-                    android:id="@+id/textView5"
-                    android:paddingBottom="5dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="00:00:00"
-                    android:id="@+id/tlen1"
-                    android:padding="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="00:00:00"
-                    android:id="@+id/tlen2"
-                    android:padding="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="00:00:00"
-                    android:id="@+id/tlen3"
-                    android:padding="5dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Interval"
+                android:id="@+id/interval"
+                android:textStyle="bold"
                 android:gravity="center"
-                android:padding="5dp">
+                android:textSize="24dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Iterations"
-                    android:id="@+id/textView6"
-                    android:paddingBottom="5dp"
-                    android:textStyle="bold" />
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Iteration"
+                android:id="@+id/iteration"
+                android:paddingBottom="5dp"
+                android:gravity="center"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="1/5"
-                    android:id="@+id/trep1"
-                    android:padding="5dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="1/5"
-                    android:id="@+id/trep2"
-                    android:padding="5dp" />
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="00:00:00"
+                android:id="@+id/tlen1"
+                android:gravity="center"
+                android:textSize="22dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="1/5"
-                    android:id="@+id/trep3"
-                    android:padding="5dp" />
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="1/5"
+                android:id="@+id/trep1"
+                android:gravity="center"
+                android:textSize="22dp" />
+        </LinearLayout>
 
-            </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="00:00:00"
+                android:id="@+id/tlen2"
+                android:gravity="center"
+                android:textSize="22dp" />
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="1/5"
+                android:id="@+id/trep2"
+                android:gravity="center"
+                android:textSize="22dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="00:00:00"
+                android:id="@+id/tlen3"
+                android:gravity="center"
+                android:textSize="22dp" />
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="1/5"
+                android:id="@+id/trep3"
+                android:gravity="center"
+                android:textSize="22dp" />
+
         </LinearLayout>
 
     </LinearLayout>

@@ -22,18 +22,18 @@ import android.widget.TextView;
 
 
 public class Timer extends Activity implements View.OnClickListener {
-    private TextView tname,ttotallen,ttotalms;
+    private TextView tname,ttotallen,ttotalms,iteration,interval;
     private TextView trep1,tlen1,trep2,tlen2,trep3,tlen3;
     private Button buttonStartTimer,buttonStopTimer, buttonPauseTimer,buttonResetTimer,buttonResumeTimer;
 
-    private CountDownTimer countDownTimer;
+    private CountDownTimer countDownTimer,countDownTimer2;
     private int hours,mins,secs;
-    private long totalTime,startTime, resumeTime;
+    private long totalTime,startTime, resumeTime,len1time,len1resume;
     private String sound;
     Typeface bold,regular;
 
     private DBManager dbManager;
-    private Ringtone r;
+    private Ringtone r,l;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,8 @@ public class Timer extends Activity implements View.OnClickListener {
         tname = (TextView) findViewById(R.id.tname);
         ttotallen = (TextView) findViewById(R.id.ttotallen);
         ttotalms= (TextView)findViewById(R.id.ttotalms);
+        iteration=(TextView)findViewById(R.id.iteration);
+        interval=(TextView)findViewById(R.id.interval);
         trep1 = (TextView)findViewById(R.id.trep1);
         tlen1= (TextView)findViewById(R.id.tlen1);
         trep2 = (TextView)findViewById(R.id.trep2);
@@ -61,8 +63,25 @@ public class Timer extends Activity implements View.OnClickListener {
 
         bold=Typeface.createFromAsset(getAssets(),"fonts/Play-Bold.ttf");
         regular=Typeface.createFromAsset(getAssets(),"fonts/Play-Regular.ttf");
+
+        tname.setTypeface(bold);
+        buttonStartTimer.setTypeface(regular);
+        buttonStopTimer.setTypeface(regular);
+        buttonPauseTimer.setTypeface(regular);
+        buttonResetTimer.setTypeface(regular);
+        buttonResumeTimer.setTypeface(regular);
+
+        trep1.setTypeface(regular);
+        tlen1.setTypeface(regular);
+        trep2.setTypeface(regular);
+        tlen2.setTypeface(regular);
+        trep3.setTypeface(regular);
+        tlen3.setTypeface(regular);
+
         ttotallen.setTypeface(regular);
         ttotalms.setTypeface(regular);
+        iteration.setTypeface(bold);
+        interval.setTypeface(bold);
 
 
         Intent intent_i = getIntent();
@@ -89,8 +108,10 @@ public class Timer extends Activity implements View.OnClickListener {
         trep3.setText(rep3);
 
 
-        int NumRep = Integer.valueOf(rep1);
-        String inputTime = len1;
+
+        //getting value for total time
+
+        String inputTime = totallen;
         try{
             String[] split = inputTime.split(":");
             hours = Integer.valueOf(split[0]);
@@ -100,6 +121,7 @@ public class Timer extends Activity implements View.OnClickListener {
             } catch (NumberFormatException nfe){
             Log.e("inputTime", "could not parse: " + inputTime);
         }
+
         startTime=totalTime;
 
         buttonStartTimer.setOnClickListener(this);
@@ -137,14 +159,7 @@ public class Timer extends Activity implements View.OnClickListener {
         if(v.getId()==R.id.buttonStartTimer){
             buttonStartTimer.setVisibility(View.GONE);
             buttonPauseTimer.setVisibility(View.VISIBLE);
-
             buttonStartTimer.setText("Start");
-            totalTime=startTime;
-            long s=totalTime/1000;
-            ttotallen.setText((String.format("%02d",s/3600))+":"+
-                (String.format("%02d",(s/60)%60))+":"+
-                (String.format("%02d",s%60)));
-            ttotalms.setText("00");
             startTimer();
         }
         else if(v.getId() == R.id.buttonPauseTimer)
@@ -159,6 +174,7 @@ public class Timer extends Activity implements View.OnClickListener {
             buttonResetTimer.setVisibility(View.GONE);
             buttonResumeTimer.setVisibility(View.GONE);
             totalTime=resumeTime;
+            len1time=len1resume;
             startTimer();
         }
         else if(v.getId()==R.id.buttonResetTimer){
@@ -187,6 +203,12 @@ public class Timer extends Activity implements View.OnClickListener {
     }
 
     public void startTimer(){
+        long s=startTime/1000;
+        ttotallen.setText((String.format("%02d",s/3600))+":"+
+                (String.format("%02d",(s/60)%60))+":"+
+                (String.format("%02d",s%60)));
+        ttotalms.setText("00");
+
         countDownTimer=new CountDownTimer(totalTime,22)
         {
 
@@ -202,16 +224,44 @@ public class Timer extends Activity implements View.OnClickListener {
 
             @Override
             public void onFinish() {
+                ttotalms.setText("00");
                 buttonStopTimer.setVisibility(View.VISIBLE);
                 buttonStopTimer.setText("Stop");
                 buttonPauseTimer.setVisibility(View.GONE);
                 buttonStartTimer.setVisibility(View.GONE);
                 buttonResumeTimer.setVisibility(View.GONE);
-                ttotallen.setText("TIME");
-                ttotalms.setText("");
                 r = RingtoneManager.getRingtone(getApplicationContext(),Uri.parse(sound));
                 r.play();
             }
+        }.start();
+
+        String tlen1time = tlen1.getText().toString();
+
+        try{
+            String[] split = tlen1time.split(":");
+            hours = Integer.valueOf(split[0]);
+            mins = Integer.valueOf(split[1]);
+            secs = Integer.valueOf(split[2]);
+            len1time=(hours*3600+mins*60+secs)*1000;
+        } catch (NumberFormatException nfe){
+            Log.e("inputTime", "could not parse: " + len1time);
+        }
+        countDownTimer2=new CountDownTimer(len1time,500)
+        {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long sec = millisUntilFinished/1000;
+                tlen1.setText((String.format("%02d",sec/3600))+":"+
+                        (String.format("%02d",(sec/60)%60))+":"+
+                        (String.format("%02d",sec%60)));
+                len1resume=millisUntilFinished;
+            }
+            @Override
+            public void onFinish() {
+                l = RingtoneManager.getRingtone(getApplicationContext(),Uri.parse(sound));
+                l.play();
+            }
+
         }.start();
     }
 }
