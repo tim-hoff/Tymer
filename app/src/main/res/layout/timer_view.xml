@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     tools:context="androiddive.timothy.tymer.Timer">
 
@@ -48,7 +48,7 @@
                 android:id="@+id/timerLen"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:textSize="75dp" />
+                android:textSize="65dp" />
 
         </LinearLayout>
 
@@ -65,9 +65,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pause"
-                android:id="@+id/buttonStopTimer"
+                android:id="@+id/buttonPauseTimer"
                 android:visibility="gone"
                 android:enabled="true"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stop"
+                android:id="@+id/buttonStopTimer"
+                android:visibility="gone"
+                android:enabled="true" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -88,6 +96,28 @@
 
         </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="RepHere"
+            android:id="@+id/intvCheck"
+            android:padding="3dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Sound String"
+            android:id="@+id/soundCheck"
+            android:padding="3dp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -13,18 +13,19 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 /**
  * Created by Timothy on 11/10/2014.
  */
 public class AddTymerActivity extends Activity implements OnClickListener {
 
-    private Button addTymerBtn,alarmBtn;
+    private Button addTymerBtn,alarmBtn,addIncrement;
     private EditText nameEditText,lenEditText,soundEditText,repText;
     private EditText repT2,repT3,repT4,lenT2,lenT3,lenT4;
-
-
+    private LinearLayout he2,he3,he4;
     private DBManager dbManager;
+    private int addT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +43,14 @@ public class AddTymerActivity extends Activity implements OnClickListener {
         lenT2= (EditText) findViewById(R.id.editText2);
         lenT3= (EditText) findViewById(R.id.editText4);
         lenT4= (EditText) findViewById(R.id.editText6);
-
         repT2= (EditText) findViewById(R.id.editText3);
         repT3= (EditText) findViewById(R.id.editText5);
         repT4= (EditText) findViewById(R.id.editText7);
-
+        addIncrement=(Button)findViewById(R.id.btnAdd);
+        he2 = (LinearLayout)findViewById(R.id.h2);
+        he3 = (LinearLayout)findViewById(R.id.h3);
+        he4 = (LinearLayout)findViewById(R.id.h4);
+        addT = 0;
 
         addTymerBtn = (Button) findViewById(R.id.add_record);
         alarmBtn = (Button) findViewById(R.id.btn_ring);
@@ -55,6 +59,7 @@ public class AddTymerActivity extends Activity implements OnClickListener {
         dbManager.open();
         addTymerBtn.setOnClickListener(this);
         alarmBtn.setOnClickListener(this);
+        addIncrement.setOnClickListener(this);
     }
 
 
@@ -80,16 +85,26 @@ public class AddTymerActivity extends Activity implements OnClickListener {
             final String len4 = lenT4.getText().toString();
             final String rep4 = repT4.getText().toString();
 
-
-
-
-
             dbManager.insert(name, desc, rep, len2,rep2,len3,rep3,len4,rep4,sound);
-
 
             Intent main = new Intent(AddTymerActivity.this, TymerActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(main);
+        }
+        else if (v.getId()==R.id.btnAdd);
+        {
+            if(addT==0)
+            {
+                he2.setVisibility(View.VISIBLE);
+                addT=1;
+            } else if(addT==1){
+                he3.setVisibility(View.VISIBLE);
+                addT=2;
+            } else if (addT==2){
+                he4.setVisibility(View.VISIBLE);
+                addIncrement.setEnabled(false);
+                addT=3;
+            }
         }
     }
     @Override

@@ -84,25 +84,25 @@ public class TymerActivity extends ActionBarActivity{
                 String id = idTextView.getText().toString();
                 String name = titleTextView.getText().toString();
                 String len = descTextView.getText().toString();
-                String re1=r1.getText().toString();
-                String re2=r2.getText().toString();
-                String re3=r3.getText().toString();
-                String re4=r4.getText().toString();
-                String le2=l2.getText().toString();
-                String le3=l3.getText().toString();
-                String le4=l4.getText().toString();
+                String rep=r1.getText().toString();
+                String rep2=r2.getText().toString();
+                String rep3=r3.getText().toString();
+                String rep4=r4.getText().toString();
+                String len2=l2.getText().toString();
+                String len3=l3.getText().toString();
+                String len4=l4.getText().toString();
                 String sound = soundTextView.getText().toString();
 
                 Intent modify_intent = new Intent(getApplicationContext(), ModifyTymerActivity.class);
                 modify_intent.putExtra("name", name);
                 modify_intent.putExtra("len", len);
-                modify_intent.putExtra("re1", re1);
-                modify_intent.putExtra("re2", re2);
-                modify_intent.putExtra("re3", re3);
-                modify_intent.putExtra("re4", re4);
-                modify_intent.putExtra("le2", le2);
-                modify_intent.putExtra("le3", le3);
-                modify_intent.putExtra("le4", le4);
+                modify_intent.putExtra("rep", rep);
+                modify_intent.putExtra("rep2", rep2);
+                modify_intent.putExtra("rep3", rep3);
+                modify_intent.putExtra("rep4", rep4);
+                modify_intent.putExtra("len2", len2);
+                modify_intent.putExtra("len3", len3);
+                modify_intent.putExtra("len4", len4);
                 modify_intent.putExtra("id", id);
                 modify_intent.putExtra("sound",sound);
 
@@ -116,19 +116,21 @@ public class TymerActivity extends ActionBarActivity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long viewId) {
                 TextView titleTextView = (TextView) view.findViewById(R.id.name);
                 TextView descTextView = (TextView) view.findViewById(R.id.len);
+                TextView repsTextView = (TextView) view.findViewById(R.id.rep);
                 TextView soundTextView = (TextView) view.findViewById(R.id.sound);
 
 
                 String title = titleTextView.getText().toString();
                 String timer1 = descTextView.getText().toString();
-                String sound1 = soundTextView.getText().toString();
+                String reps  = repsTextView.getText().toString();
+                String sound = soundTextView.getText().toString();
 
                 Intent intent_t = new Intent(getApplicationContext(), Timer.class);
                 intent_t.putExtra("title", title);
                 intent_t.putExtra("timer1", timer1);
-                intent_t.putExtra("sound1", sound1);
+                intent_t.putExtra("reps", reps);
+                intent_t.putExtra("sound", sound);
 
-                Log.v("asdf", "Creating Timer");
                 startActivity(intent_t);
             }
         });

@@ -18,7 +18,7 @@
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -45,7 +45,7 @@
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -53,26 +53,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/name"
-                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/id"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:padding="3dp"
                     android:visibility="visible"
-                    android:text="00:00:00" />
+                    android:text="00:00:00"
+                    android:padding="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="x"
+                    android:id="@+id/textView"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
 
                 <TextView
                     android:id="@+id/rep"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/name"
-                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/id"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:padding="3dp"
                     android:visibility="visible"
-                    android:text="x 1" />
+                    android:text="1" />
             </LinearLayout>
 
         </LinearLayout>
@@ -145,6 +152,36 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="x"
+                    android:id="@+id/textView2"
+                    android:padding="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="x"
+                    android:id="@+id/textView3"
+                    android:padding="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="x"
+                    android:id="@+id/textView4"
+                    android:padding="3dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_toEndOf="@+id/linearLayout"
                 android:layout_alignParentTop="true"
@@ -155,39 +192,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/name"
-                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/id"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:padding="3dp"
                     android:visibility="visible"
-                    android:text="x 0" />
+                    android:text="0" />
 
                 <TextView
                     android:id="@+id/rep3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/name"
-                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/id"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:padding="3dp"
                     android:visibility="visible"
-                    android:text="x 0" />
+                    android:text="0" />
 
                 <TextView
                     android:id="@+id/rep4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/name"
-                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/id"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:padding="3dp"
                     android:visibility="visible"
-                    android:text="x 0" />
+                    android:text="0" />
             </LinearLayout>
         </LinearLayout>
 

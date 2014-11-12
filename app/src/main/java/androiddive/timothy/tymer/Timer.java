@@ -21,41 +21,48 @@ import android.widget.TextView;
 
 
 public class Timer extends Activity implements View.OnClickListener {
-    private  TextView timerN,timerL;
-    private TextView soundText,intvz;
-    private Button bStart,bStop,bRes;
+    private TextView timerN,timerL,inC,snC;
+    private Button bStart,bStop,bPause,bRes;
     private CountDownTimer countDownTimer;
-    private long totalTime;
-    private int hours,mins,secs;
-    private long resumeTime;
+    private long totalTime,resumeTime;
+    private int hours,mins,secs,ms;
     private DBManager dbManager;
+    private long startTime;
     private Ringtone r;
-    String timer1;
+    private String sound;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer_view);
-        soundText=(TextView)findViewById(R.id.sound_edittext);
-        intvz = (TextView)findViewById(R.id.rep);
-        bStart = (Button)findViewById(R.id.buttonStartTimer);
-        bStop = (Button)findViewById(R.id.buttonStopTimer);
-        bRes = (Button)findViewById(R.id.buttonResumeTimer);
-        dbManager = new DBManager(this);
-        dbManager.open();
-        Log.i("asdf", "on create called ");
         timerN = (TextView) findViewById(R.id.timerName);
         timerL = (TextView) findViewById(R.id.timerLen);
+        inC= (TextView)findViewById(R.id.intvCheck);
+        snC=(TextView)findViewById(R.id.soundCheck);
+
+        bStart = (Button)findViewById(R.id.buttonStartTimer);
+        bPause = (Button)findViewById(R.id.buttonPauseTimer);
+        bRes = (Button)findViewById(R.id.buttonResumeTimer);
+        bStop= (Button) findViewById(R.id.buttonStopTimer);
+
+        dbManager = new DBManager(this);
+        dbManager.open();
 
         Intent intent_i = getIntent();
         String title = intent_i.getStringExtra("title");
-        Log.i("title", "title" + title);
+        String timer1 = intent_i.getStringExtra("timer1");
+        String reps=intent_i.getStringExtra("reps");
+        sound=intent_i.getStringExtra("sound");
 
-        timer1 = intent_i.getStringExtra("timer1");
-        Log.i("len", "len" + timer1);
 
+        // Passing needed infromation to the timer.
         timerN.setText(title);
         timerL.setText(timer1);
+        inC.setText(reps);
+        snC.setText(sound);
+
+        int NumRep = Integer.valueOf(reps);
         String inputTime = timer1;
         try{
             String[] split = inputTime.split(":");
@@ -66,10 +73,12 @@ public class Timer extends Activity implements View.OnClickListener {
             } catch (NumberFormatException nfe){
             Log.e("inputTime", "could not parse: " + inputTime);
         }
+        startTime=totalTime;
 
         bStart.setOnClickListener(this);
-        bStop.setOnClickListener(this);
+        bPause.setOnClickListener(this);
         bRes.setOnClickListener(this);
+        bStop.setOnClickListener(this);
     }
 
 
@@ -98,32 +107,46 @@ public class Timer extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.buttonStartTimer){
-                bStop.setVisibility(View.VISIBLE);
+                bPause.setVisibility(View.VISIBLE);
                 bRes.setVisibility(View.GONE);
                 bStart.setVisibility(View.GONE);
                 bStart.setText("Start");
-                startTimer();}
-        else if(v.getId() == R.id.buttonStopTimer){
-
+                totalTime=startTime;
+                long s=totalTime/1000;
+                timerL.setText((String.format("%02d",s/3600))+":"+
+                    (String.format("%02d",(s/60)%60))+":"+
+                    (String.format("%02d",s%60))+":00");
+                startTimer();
+        }
+        else if(v.getId() == R.id.buttonPauseTimer){
                 countDownTimer.cancel();
-                bStop.setVisibility(View.GONE);
+                bPause.setVisibility(View.GONE);
                 bStart.setText("Restart");
                 bRes.setVisibility(View.VISIBLE);
                 bStart.setVisibility(View.VISIBLE);
             }
-
         else if(v.getId()==R.id.buttonResumeTimer){
-            bStop.setVisibility(View.VISIBLE);
+            bPause.setVisibility(View.VISIBLE);
             bRes.setVisibility(View.GONE);
             bStart.setText("Start");
             bStart.setVisibility(View.GONE);
             totalTime=resumeTime;
             startTimer();
         }
+        else if(v.getId()==R.id.buttonStopTimer){
+            bStop.setVisibility(View.GONE);
+             r.stop();
+            bStart.setVisibility(View.VISIBLE);
+            totalTime=startTime;
+            long s=totalTime/1000;
+            timerL.setText((String.format("%02d",s/3600))+":"+
+                    (String.format("%02d",(s/60)%60))+":"+
+                    (String.format("%02d",s%60))+":00");
+        }
     }
 
     public void startTimer(){
-        countDownTimer=new CountDownTimer(totalTime,500)
+        countDownTimer=new CountDownTimer(totalTime,22)
         {
 
             @Override
@@ -131,7 +154,7 @@ public class Timer extends Activity implements View.OnClickListener {
                 long sec = millisUntilFinished/1000;
                 timerL.setText((String.format("%02d",sec/3600))+":"+
                                (String.format("%02d",(sec/60)%60))+":"+
-                               (String.format("%02d",sec%60)));
+                               (String.format("%02d",sec%60))+":"+String.format("%02d",(millisUntilFinished/10)%100));
                 resumeTime=millisUntilFinished;
             }
 
@@ -139,17 +162,14 @@ public class Timer extends Activity implements View.OnClickListener {
             public void onFinish() {
                 bStop.setVisibility(View.VISIBLE);
                 bStop.setText("Stop");
+                bPause.setVisibility(View.GONE);
                 bStart.setVisibility(View.GONE);
                 bRes.setVisibility(View.GONE);
-                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-                r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                r.play();
-
-
                 timerL.setText("TIME");
 
+                r = RingtoneManager.getRingtone(getApplicationContext(),Uri.parse(sound));
+                r.play();
             }
         }.start();
     }
-
 }

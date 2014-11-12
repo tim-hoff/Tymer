@@ -111,8 +111,6 @@ public class ModifyTymerActivity extends Activity implements OnClickListener{
                 String len4 = lenT4.getText().toString();
                 String rep4 = repT4.getText().toString();
 
-
-
                 dbManager.update(_id, title, desc, rep, len2,rep2,len3,rep3,len4,rep4,sound);
                 this.returnHome();
             }
