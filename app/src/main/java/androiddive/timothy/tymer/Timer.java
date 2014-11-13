@@ -26,15 +26,23 @@ public class Timer extends Activity implements View.OnClickListener {
     private TextView trep1,tlen1,trep2,tlen2,trep3,tlen3;
     private Button buttonStartTimer,buttonStopTimer, buttonPauseTimer,buttonResetTimer,buttonResumeTimer;
 
-    private CountDownTimer countDownTimer,countDownTimer2;
+    private CountDownTimer countDownTimer,cdt1,cdt2,cdt3;
     private int hours,mins,secs;
-    private long totalTime,startTime, resumeTime,len1time,len1resume;
+    private long totalTime,startTime, resumeTime;
+
+    private long len1time,len2time,len3time;
+    private long len1resume,len2resume,len3resume;
+    private int turn = 1;
+    private int increp1=1,increp2=1,increp3=1; // n
+    private int numrep1,numrep2,numrep3; // d
+
+
     private String sound;
     Typeface bold,regular;
 
     private DBManager dbManager;
     private Ringtone r,l;
-
+    private Boolean t1a=true,t2a=true,t3a=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +71,8 @@ public class Timer extends Activity implements View.OnClickListener {
 
         bold=Typeface.createFromAsset(getAssets(),"fonts/Play-Bold.ttf");
         regular=Typeface.createFromAsset(getAssets(),"fonts/Play-Regular.ttf");
-
         tname.setTypeface(bold);
+
         buttonStartTimer.setTypeface(regular);
         buttonStopTimer.setTypeface(regular);
         buttonPauseTimer.setTypeface(regular);
@@ -107,7 +115,10 @@ public class Timer extends Activity implements View.OnClickListener {
         tlen3.setText(len3);
         trep3.setText(rep3);
 
-
+        increp1=increp2=increp3=1;
+        numrep1 = Integer.valueOf(rep1.toString());
+        numrep2 = Integer.valueOf(rep2.toString());
+        numrep3 = Integer.valueOf(rep3.toString());
 
         //getting value for total time
 
@@ -196,8 +207,8 @@ public class Timer extends Activity implements View.OnClickListener {
             totalTime=startTime;
             long s=totalTime/1000;
             ttotallen.setText((String.format("%02d",s/3600))+":"+
-                    (String.format("%02d",(s/60)%60))+":"+
-                    (String.format("%02d",s%60)));
+                              (String.format("%02d",(s/60)%60))+":"+
+                              (String.format("%02d",s%60)));
             ttotalms.setText("00");
         }
     }
@@ -205,8 +216,8 @@ public class Timer extends Activity implements View.OnClickListener {
     public void startTimer(){
         long s=startTime/1000;
         ttotallen.setText((String.format("%02d",s/3600))+":"+
-                (String.format("%02d",(s/60)%60))+":"+
-                (String.format("%02d",s%60)));
+                          (String.format("%02d",(s/60)%60))+":"+
+                          (String.format("%02d",s%60)));
         ttotalms.setText("00");
 
         countDownTimer=new CountDownTimer(totalTime,22)
@@ -234,34 +245,43 @@ public class Timer extends Activity implements View.OnClickListener {
                 r.play();
             }
         }.start();
+        startSubTimer();
+    }
 
-        String tlen1time = tlen1.getText().toString();
 
-        try{
-            String[] split = tlen1time.split(":");
-            hours = Integer.valueOf(split[0]);
-            mins = Integer.valueOf(split[1]);
-            secs = Integer.valueOf(split[2]);
-            len1time=(hours*3600+mins*60+secs)*1000;
-        } catch (NumberFormatException nfe){
-            Log.e("inputTime", "could not parse: " + len1time);
+
+    public void startSubTimer(){
+        if(t1a||t2a||t3a){
+            if(turn==1&&increp1<=numrep1&&t1a){
+                trep1.setText(Integer.toString(increp1)+"/" +Integer.toString(numrep1));
+                increp1=increp1+1;
+                turn=2;
+            }
+            else if(turn==2&&increp2<=numrep2&&t2a){
+                trep2.setText(Integer.toString(increp2)+"/" +Integer.toString(numrep2));
+                increp2=increp2+1;
+                turn=3;
+            }
+            else if(turn==3&&increp3<=numrep3&&t3a){
+                trep3.setText(Integer.toString(increp3)+"/" +Integer.toString(numrep3));
+                increp3=increp3+1;
+                turn=1;
+            }
+            else{
+                if(increp1>numrep1)
+                    t1a=false;
+                if(increp2>numrep2)
+                    t2a=false;
+                if(increp3>numrep3)
+                    t3a = false;
+
+                if(turn==3)
+                    turn=1;
+                else
+                    turn=turn+1;
+                startSubTimer();
+
+            }
         }
-        countDownTimer2=new CountDownTimer(len1time,500)
-        {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                long sec = millisUntilFinished/1000;
-                tlen1.setText((String.format("%02d",sec/3600))+":"+
-                        (String.format("%02d",(sec/60)%60))+":"+
-                        (String.format("%02d",sec%60)));
-                len1resume=millisUntilFinished;
-            }
-            @Override
-            public void onFinish() {
-                l = RingtoneManager.getRingtone(getApplicationContext(),Uri.parse(sound));
-                l.play();
-            }
-
-        }.start();
     }
 }
