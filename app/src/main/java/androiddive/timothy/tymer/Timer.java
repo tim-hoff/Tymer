@@ -31,6 +31,7 @@ public class Timer extends Activity implements View.OnClickListener {
     private long totalTime,startTime, resumeTime;
 
     private long len1time,len2time,len3time;
+    private long len1start,len2start,len3start;
     private long len1resume,len2resume,len3resume;
     private int turn = 1;
     private int increp1=1,increp2=1,increp3=1; // n
@@ -41,8 +42,10 @@ public class Timer extends Activity implements View.OnClickListener {
     Typeface bold,regular;
 
     private DBManager dbManager;
-    private Ringtone r,l;
+    private Ringtone r,l1,l2,l3;
     private Boolean t1a=true,t2a=true,t3a=true;
+    private Boolean c1isrunning=false,c2isrunning=false,c3isrunning=false;
+    private Boolean l1isplaying=false,l2isplaying=false,l3isplaying=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,11 +112,24 @@ public class Timer extends Activity implements View.OnClickListener {
         tname.setText(name);
         ttotallen.setText(totallen);
         tlen1.setText(len1);
-        trep1.setText(rep1);
+        trep1.setText("0/"+rep1);
         tlen2.setText(len2);
-        trep2.setText(rep2);
+        trep2.setText("0/"+rep2);
         tlen3.setText(len3);
-        trep3.setText(rep3);
+        trep3.setText("0/"+rep3);
+        if(Integer.valueOf(rep1.toString())==0){
+            trep1.setVisibility(View.GONE);
+            tlen1.setVisibility(View.GONE);
+        }
+        if(Integer.valueOf(rep2.toString())==0){
+            trep2.setVisibility(View.GONE);
+            tlen2.setVisibility(View.GONE);
+        }
+        if(Integer.valueOf(rep3.toString())==0){
+            trep3.setVisibility(View.GONE);
+            tlen3.setVisibility(View.GONE);
+        }
+
 
         increp1=increp2=increp3=1;
         numrep1 = Integer.valueOf(rep1.toString());
@@ -176,9 +192,16 @@ public class Timer extends Activity implements View.OnClickListener {
         else if(v.getId() == R.id.buttonPauseTimer)
         {
             countDownTimer.cancel();
+            if(c1isrunning)
+            cdt1.cancel();
+            if(c2isrunning)
+            cdt2.cancel();
+            if(c3isrunning)
+            cdt3.cancel();
             buttonPauseTimer.setVisibility(View.GONE);
             buttonResumeTimer.setVisibility(View.VISIBLE);
             buttonResetTimer.setVisibility(View.VISIBLE);
+
             }
         else if(v.getId()==R.id.buttonResumeTimer){
             buttonPauseTimer.setVisibility(View.VISIBLE);
@@ -186,6 +209,8 @@ public class Timer extends Activity implements View.OnClickListener {
             buttonResumeTimer.setVisibility(View.GONE);
             totalTime=resumeTime;
             len1time=len1resume;
+            len2time=len2resume;
+            len3time=len3resume;
             startTimer();
         }
         else if(v.getId()==R.id.buttonResetTimer){
@@ -193,6 +218,10 @@ public class Timer extends Activity implements View.OnClickListener {
             buttonResumeTimer.setVisibility(View.GONE);
             buttonResetTimer.setVisibility(View.GONE);
             totalTime=startTime;
+            len1time=len1start;
+            len2time=len2start;
+            len3time=len3start;
+
             long s=totalTime/1000;
             ttotallen.setText((String.format("%02d",s/3600))+":"+
                     (String.format("%02d",(s/60)%60))+":"+
@@ -202,9 +231,20 @@ public class Timer extends Activity implements View.OnClickListener {
         }
         else if(v.getId()==R.id.buttonStopTimer){
             r.stop();
+            if(l1isplaying)
+                l1.stop();
+            if(l2isplaying)
+                l2.stop();
+            if(l3isplaying)
+                l3.stop();
+
             buttonStopTimer.setVisibility(View.GONE);
             buttonStartTimer.setVisibility(View.VISIBLE);
             totalTime=startTime;
+            len1time=len1start;
+            len2time=len2start;
+            len3time=len3start;
+
             long s=totalTime/1000;
             ttotallen.setText((String.format("%02d",s/3600))+":"+
                               (String.format("%02d",(s/60)%60))+":"+
@@ -256,16 +296,127 @@ public class Timer extends Activity implements View.OnClickListener {
                 trep1.setText(Integer.toString(increp1)+"/" +Integer.toString(numrep1));
                 increp1=increp1+1;
                 turn=2;
+                try {
+                    String[] split = tlen1.getText().toString().split(":");
+                    hours = Integer.valueOf(split[0]);
+                    mins = Integer.valueOf(split[1]);
+                    secs = Integer.valueOf(split[2]);
+                    len1time = (hours * 3600 + mins * 60 + secs) * 1000;
+
+                } catch (NumberFormatException nfe) {
+                    Log.e("inputTime", "could not parse: " + len1time);}
+                len1start=len1time;
+
+                cdt1 = new CountDownTimer(len1time, 500) {
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        c1isrunning=true;
+                        long sec = millisUntilFinished / 1000;
+                        tlen1.setText((String.format("%02d", sec / 3600)) + ":" +
+                                (String.format("%02d", (sec / 60) % 60)) + ":" +
+                                (String.format("%02d", sec % 60)));
+                        len1resume = millisUntilFinished;
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        c1isrunning=false;
+//                        l1 = RingtoneManager.getRingtone(getApplicationContext(), Uri.parse(sound));
+//                        l1.play();
+//                        l1isplaying=true;
+                        long s=len1start/1000;
+                        tlen1.setText((String.format("%02d",s/3600))+":"+
+                                (String.format("%02d",(s/60)%60))+":"+
+                                (String.format("%02d",s%60)));
+
+                        startSubTimer();
+                    }
+                } .start();
+
             }
             else if(turn==2&&increp2<=numrep2&&t2a){
                 trep2.setText(Integer.toString(increp2)+"/" +Integer.toString(numrep2));
                 increp2=increp2+1;
                 turn=3;
+                try {
+                    String[] split = tlen2.getText().toString().split(":");
+                    hours = Integer.valueOf(split[0]);
+                    mins = Integer.valueOf(split[1]);
+                    secs = Integer.valueOf(split[2]);
+                    len2time = (hours * 3600 + mins * 60 + secs) * 1000;
+
+                } catch (NumberFormatException nfe) {
+                    Log.e("inputTime", "could not parse: " + len2time);}
+                len2start=len2time;
+
+                cdt2 = new CountDownTimer(len2time, 500) {
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        c2isrunning=true;
+                        long sec = millisUntilFinished / 1000;
+                        tlen2.setText((String.format("%02d", sec / 3600)) + ":" +
+                                (String.format("%02d", (sec / 60) % 60)) + ":" +
+                                (String.format("%02d", sec % 60)));
+                        len2resume = millisUntilFinished;
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        c2isrunning=false;
+
+//                        l2 = RingtoneManager.getRingtone(getApplicationContext(), Uri.parse(sound));
+//                        l2.play();
+//                        l2isplaying=true;
+                        long s=len2start/1000;
+                        tlen2.setText((String.format("%02d",s/3600))+":"+
+                                (String.format("%02d",(s/60)%60))+":"+
+                                (String.format("%02d",s%60)));
+                        startSubTimer();
+                    }
+                } .start();
             }
             else if(turn==3&&increp3<=numrep3&&t3a){
                 trep3.setText(Integer.toString(increp3)+"/" +Integer.toString(numrep3));
                 increp3=increp3+1;
                 turn=1;
+                try {
+                    String[] split = tlen3.getText().toString().split(":");
+                    hours = Integer.valueOf(split[0]);
+                    mins = Integer.valueOf(split[1]);
+                    secs = Integer.valueOf(split[2]);
+                    len3time = (hours * 3600 + mins * 60 + secs) * 1000;
+
+                } catch (NumberFormatException nfe) {
+                    Log.e("inputTime", "could not parse: " + len2time);}
+                len3start=len3time;
+
+                cdt3 = new CountDownTimer(len3time, 500) {
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        c3isrunning=true;
+                        long sec = millisUntilFinished / 1000;
+                        tlen3.setText((String.format("%02d", sec / 3600)) + ":" +
+                                (String.format("%02d", (sec / 60) % 60)) + ":" +
+                                (String.format("%02d", sec % 60)));
+                        len3resume = millisUntilFinished;
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        c3isrunning=false;
+//                        l3 = RingtoneManager.getRingtone(getApplicationContext(), Uri.parse(sound));
+//                        l3.play();
+//                        l3isplaying=true;
+                        long s=len3start/1000;
+                        tlen3.setText((String.format("%02d",s/3600))+":"+
+                                (String.format("%02d",(s/60)%60))+":"+
+                                (String.format("%02d",s%60)));
+                        startSubTimer();
+                    }
+                } .start();
             }
             else{
                 if(increp1>numrep1)
