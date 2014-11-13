@@ -1,6 +1,7 @@
 package androiddive.timothy.tymer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
@@ -19,12 +20,14 @@ import android.widget.EditText;
 import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.widget.TextView;
+import android.os.Vibrator;
 
 
 public class Timer extends Activity implements View.OnClickListener {
     private TextView tname, ttotallen, ttotalms, iteration, interval;
     private TextView trep1, tlen1, trep2, tlen2, trep3, tlen3;
     private Button buttonStartTimer, buttonStopTimer, buttonPauseTimer, buttonResetTimer, buttonResumeTimer;
+
 
     private CountDownTimer countDownTimer, cdt1, cdt2, cdt3;
     private int hours, mins, secs;
@@ -39,6 +42,8 @@ public class Timer extends Activity implements View.OnClickListener {
     private int turn = 1,turnresume=1;
     private int increp1 = 1, increp2 = 1, increp3 = 1; // n
     private int numrep1, numrep2, numrep3; // d
+    long[] pattern = {0,1000,500,500,250};
+
 
 
 
@@ -51,6 +56,7 @@ public class Timer extends Activity implements View.OnClickListener {
     private Boolean t1a = true, t2a = true, t3a = true;
     private Boolean c1isrunning = false, c2isrunning = false, c3isrunning = false;
     private Boolean l1isplaying = false, l2isplaying = false, l3isplaying = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +64,6 @@ public class Timer extends Activity implements View.OnClickListener {
 
         dbManager = new DBManager(this);
         dbManager.open();
-
         tname = (TextView) findViewById(R.id.tname);
         ttotallen = (TextView) findViewById(R.id.ttotallen);
         ttotalms = (TextView)findViewById(R.id.ttotalms);
@@ -294,7 +299,6 @@ public class Timer extends Activity implements View.OnClickListener {
                 trep1.setText(Integer.toString(increp1) + "/" + Integer.toString(numrep1));
                 increp1 = increp1 + 1;
                 turn = 2;
-
                 resetinv1();
 
                 cdt1 = new CountDownTimer(len1time, 500) {
@@ -312,6 +316,8 @@ public class Timer extends Activity implements View.OnClickListener {
                     @Override
                     public void onFinish() {
                         c1isrunning = false;
+                        Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                        v.vibrate(pattern,-1);
                         //                        l1 = RingtoneManager.getRingtone(getApplicationContext(), Uri.parse(sound));
                         //                        l1.play();
                         //                        l1isplaying=true;
@@ -319,8 +325,8 @@ public class Timer extends Activity implements View.OnClickListener {
                         tlen1.setText((String.format("%02d", s / 3600)) + ":" +
                                 (String.format("%02d", (s / 60) % 60)) + ":" +
                                 (String.format("%02d", s % 60)));
-
                         startSubTimer();
+
                     }
                 } .start();
 
@@ -346,6 +352,8 @@ public class Timer extends Activity implements View.OnClickListener {
                     @Override
                     public void onFinish() {
                         c2isrunning = false;
+                        Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                        v.vibrate(pattern,-1);
 
                         // l2 = RingtoneManager.getRingtone(getApplicationContext(), Uri.parse(sound));
                         // l2.play();
@@ -362,7 +370,6 @@ public class Timer extends Activity implements View.OnClickListener {
                 increp3 = increp3 + 1;
                 turn = 1;
                 resetinv3();
-
                 cdt3 = new CountDownTimer(len3time, 500) {
 
                     @Override
@@ -378,6 +385,8 @@ public class Timer extends Activity implements View.OnClickListener {
                     @Override
                     public void onFinish() {
                         c3isrunning = false;
+                        Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                        v.vibrate(pattern,-1);
 
                         //l3 = RingtoneManager.getRingtone(getApplicationContext(), Uri.parse(sound));
                         //l3.play();

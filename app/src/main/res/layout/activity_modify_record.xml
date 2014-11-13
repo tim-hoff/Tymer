@@ -123,7 +123,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="14"
-            android:text="@string/btn_ring" />
+            android:text="@string/btn_ring"
+            android:background="@drawable/abc_menu_dropdown_panel_holo_light" />
 
     </LinearLayout>
 
@@ -140,7 +141,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btn_update"
-            android:ems="7" />
+            android:ems="7"
+            android:background="@drawable/abc_menu_dropdown_panel_holo_light" />
 
         <Button
             android:id="@+id/btn_delete"
@@ -148,7 +150,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btn_delete"
-            android:ems="7" />
+            android:ems="7"
+            android:background="@drawable/abc_menu_dropdown_panel_holo_light" />
     </LinearLayout>
 
 </LinearLayout>
